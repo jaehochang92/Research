@@ -1,0 +1,51 @@
+city,avg_sessionDuration,total_sessionDuration,total_sessions
+New York,53.91,10729,199
+Chicago,93.03,6977,75
+Los Angeles,53.31,3945,74
+(not set),67.91,4346,64
+Dallas,88.97,3292,37
+Houston,33.9,1051,31
+Las Vegas,44.96,1169,26
+Indianapolis,150.65,3917,26
+Austin,127.44,3186,25
+San Antonio,29.38,705,24
+Charlotte,66.79,1269,19
+San Diego,8,144,18
+Atlanta,159.61,2873,18
+Santa Clara,36.72,661,18
+Columbus,359.47,6111,17
+Seattle,59.41,1010,17
+San Francisco,60.71,1032,17
+Boston,34.06,545,16
+Miami,101.12,1618,16
+Newark,105.19,1683,16
+San Jose,31.73,476,15
+Fresno,114.21,1599,14
+Powell,1029.15,13379,13
+Reston,118.33,1420,12
+Arlington,41.83,502,12
+Jacksonville,168.18,1850,11
+Fort Worth,24.73,272,11
+Chula Vista,65.4,654,10
+Kansas City,40.5,405,10
+Orlando,154.1,1541,10
+Sacramento,133.8,1338,10
+Raleigh,71.67,645,9
+Colorado Springs,55.22,497,9
+Gilbert,401,3609,9
+Four Corners,13.12,105,8
+Tempe,206.25,1650,8
+Three Lakes,11.88,95,8
+Garden Grove,366,2928,8
+Long Beach,38.12,305,8
+Springfield,28.25,226,8
+Tamarac,127.12,1017,8
+Rocky River,361.62,2893,8
+Bellevue,27.14,190,7
+El Paso,188.86,1322,7
+Oklahoma City,11.57,81,7
+Elk Grove,45,315,7
+Fort Lee,18.86,132,7
+Pasadena,33,231,7
+Saint Paul,298.86,2092,7
+Cedar Hill,58.17,349,6

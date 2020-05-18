@@ -1,0 +1,111 @@
+---
+title: "Product Kernel"
+author: "Jaeho, Chang"
+date: "11/10/2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(mvtnorm) ; require(dplyr) ; require(data.table)
+require(MASS) ; require(plot3D) ; require(plotly)
+dmvnormgrid <- function(x1,x2,mean,sigma){
+  x <- cbind(x1,x2)
+  return(dmvnorm(x,mean,sigma))
+}
+sqrtM <- function(M){
+  l <- eigen(M)
+  ord <- order(-l$values)
+  return(l$vectors[,ord]%*%sqrt(diag(sort(l$values,decreasing = T)))%*%t(l$vectors[,ord]))
+}
+```
+
+## Setup
+
+#### sample size from 100 to 1000\
+
+#### Bivariate Epanechnikov Kernel\
+
+$\begin{align}K(\mathbf{u}):=\left(\frac{3}{4}\right)^2(1-u_1^2)(1-u_2^2)~,~|u_1|\leq1~,~|u_2|\leq1\end{align}$
+
+$\begin{align}K_H(\mathbf{u}):=\det(H)^{-1/2}K\left[H^{-1/2}\mathbf{u}\right]~,~H\,;\,p.d.~,~symm.\end{align}$
+
+$\begin{align}\hat{f}(\mathbf{u};H)=\frac{1}{n}\sum_{i=1}^nK_H(\mathbf{u}-\mathbf{X_i})=\frac{1}{n\sqrt{\det(H)}}\sum_{i=1}^nK\left[H^{-1/2}(\mathbf{u}-\mathbf{X_i})\right]\end{align}$
+
+#### Random samples from $N_2(\mathbf{0},I)$
+
+```{r, echo=F}
+inputPanel(
+  sliderInput("n", label = "Number of samples : ",
+              min = 100, max = 1000, value = 300, step = 10),
+  sliderInput("bw_adjust", label = "Bandwidth adjustment : ",
+              min = .01, max = .5, value = .3, step = .01),
+  sliderInput("theta", label = "theta : ",
+              min = 0, max = 180, value = 30, step = 5),
+  sliderInput("phi", label = "phi : ",
+              min = 0, max = 180, value = 25, step = 5)
+)
+
+px <- 2000
+renderPlot({
+  EpaK <- function(u){
+    dim(u)[2] <- 2
+    return((3/4)^2*(1-u[,1]^2)*(1-u[,2]^2)*I(abs(u[,1])<=1)*I(abs(u[,2])<=1))
+  }
+  hf <- function(u1,u2,Xm,H){ # u, Xm ; n by d matrix!
+    idx=1:length(u1)
+    u <- data.frame(cbind(u1,u2))
+    n <- nrow(Xm)
+    lhs <- 1/(n*sqrt(det(H)))
+    grd <- merge(u,Xm)
+    rhs <- rep(0,length(u1))
+    for(i in 1:n){
+      Xmi <- matrix(Xm[i,],nrow = length(u1),ncol = 2,byrow = T)
+      rhs <- rhs + EpaK(as.matrix(u-Xmi)%*%sqrtM(solve(H)))
+    }
+    rhs <- EpaK(as.matrix((grd[,c("u1","u2")]-grd[,c("V1","V2")]))%*%sqrtM(solve(H)))
+    DT <- as.data.table(cbind(idx,rhs)) ; rhs <- DT[,sum(rhs),by=.(idx)][,V1]
+    return(lhs*rhs)
+  }
+  
+  # Parametric part
+  x1 <- x2 <- seq(-3,3,length.out = 100)
+  n <- input$n
+  grid <- as.matrix(expand.grid(x1,x2))
+  z1 <- dmvnorm(grid,c(0,0),diag(1,2))
+  z2 <- mvrnorm(n,c(0,0),matrix(c(1,-.7,-.7,1),nrow = 2))
+  z1out <- outer(x1,x2,dmvnormgrid,c(0,0),diag(1,2))
+  z2out <- outer(x1,x2,dmvnormgrid,c(0,0),matrix(c(1,-.7,-.7,1),nrow = 2))
+  data1 <- mvrnorm(n,c(0,0),diag(1,2))
+  data2 <- mvrnorm(n,c(0,0),matrix(c(1,-.7,-.7,1),nrow = 2))
+  
+  u1 <- data1[,1] ; u2 <- data1[,2] ; u3 <- data2[,1] ; u4 <- data2[,2]
+  H <- diag(input$bw_adjust,2)
+  z1d <- hf(u1,u2,data1,H)
+  z2d <- hf(u3,u4,data2,H)
+  
+  par(mfrow=c(2,1))
+  contour3D(x1, x2, z1out, colvar = z1out, nlevels = 20,
+            clab = 'density', xlab = 'X1', ylab = 'X2', zlab = 'density', theta = input$theta
+            ,phi = input$phi, col = 'blue', lwd = 1, xlim=c(-3,3),ylim=c(-3,3),zlim=c(0,.2))
+  segments3D(u1, u2, rep(0,length(z1d)), u1, u2, z1d, col = 'red',
+             lwd=.6, lty=1, add = T)
+  # z1outd <- outer(u1,u2,hf,data1,H)
+  # contour3D(u1, u2, z = z1outd, colvar = z1outd, nlevels = 15 ,phi = 25, col = 'red',
+  #           lwd = 1.75, add = T)
+  legend('topright', lty = c(1,1), lwd = c(1.75,1), col = c('blue','red'),
+         legend = c(expression(f),expression(hat(f))), cex=1.3)
+
+  contour3D(x1, x2, z2out, colvar = z2out, nlevels = 20,
+            clab = 'density', xlab = 'X1', ylab = 'X2', zlab = 'density', theta = input$theta
+            ,phi = input$phi, col = 'blue', lwd = 1, xlim=c(-3,3),ylim=c(-3,3),zlim=c(0,.2))
+  segments3D(u3, u4, rep(0,length(z2d)), u3, u4, z2d, col = 'red',
+             lwd=.6, lty=1, add = T)
+  # z1outd <- outer(u3,u4,hf,data2,H)
+  # contour3D(u3, u4, z = z2outd, colvar = z2outd, nlevels = 15 ,phi = 25, col = 'red',
+  #           lwd = 1.75, add = T)
+  legend('topright', lty = c(1,1), lwd = c(1.75,1), col = c('blue','red'),
+         legend = c(expression(f),expression(hat(f))), cex=1.3)
+}, width = px, height = px)
+```

@@ -1,0 +1,59 @@
+---
+title: "R 3D plot"
+author: "Jaeho, Chang"
+date: "6/3/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(plot3Drgl)
+```
+
+## Typical framework of 3D Plot in R
+
+Here we instruct the 3d plotting in R by examples.
+
+```{r}
+set.seed(1001)
+options(scipen = 1e2)
+n <- 1e2
+ng <- 40
+
+a <- seq(1, 5, length.out = ng)
+b <- seq(.3, .4, length.out = ng)
+a0 <- a[ng/2] ; b0 <- b[ng/2]
+sam1 <- rbeta(n, a0, b0)
+sam2 <- rnorm(n, a0, b0)
+eg <- expand.grid(a = a, b = b)
+
+llbeta <- Vectorize(function(a, b) sum(log(dbeta(sam1, a, b))))
+llnorm <- Vectorize(function(m, s) sum(log(dnorm(sam2, m, s))))
+z1 <- llbeta(eg$a, eg$b)
+z2 <- llnorm(eg$a, eg$b)
+
+
+scatter3D(eg$a, eg$b, z1, ticktype = 'detailed', cex = .2, main = 'log-likelihood',
+          theta = 30, phi = 30, xlab = 'a', ylab = 'b', zlab = NA)
+lines3D(x = c(a0, a0), y = c(b0, b0), z = c(min(z1), max(z1)), add = T, lwd = 1.5)
+rbind(zero = c(a0, b0), hat = eg[which.max(z1),])
+
+scatter3D(eg$a, eg$b, z2, ticktype = 'detailed', cex = .2, main = 'log-likelihood',
+          theta = 40, phi = 30, xlab = 'a', ylab = 'b', zlab = NA)
+lines3D(c(a0, a0), c(b0, b0), c(min(z2), max(z2)), add = T, lwd = 1.5)
+rbind(zero = c(a0, b0), hat = eg[which.max(z2),])
+```
+
+```{r}
+n <- 75
+
+y <- x <- seq(0, 1, length.out = n)
+eg <- expand.grid(x = x, y = y)
+# eg$z <- 1 - eg$x - eg$y
+eg$z <- 120 * eg$x * eg$y * (1 - eg$x - eg$y)
+eg <- eg[eg$z >= 0, ]
+scatter3D(eg$x, eg$y, eg$z, ticktype = 'detailed', cex = .2, 
+          main = 'Dirichlet(2, 2, 2) simplex', theta = 0, phi = 40, xlab = 'x',
+          ylab = 'y', zlab = NA)
+```
+

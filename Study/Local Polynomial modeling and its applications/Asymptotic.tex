@@ -1,0 +1,220 @@
+% ***********************************************************
+% ******************* PHYSICS HEADER ************************
+% ***********************************************************
+% Version 2
+\documentclass[12pt]{article}
+\usepackage{amsmath} % AMS Math Package
+\usepackage{amsthm} % Theorem Formatting
+\usepackage{amssymb}    % Math symbols such as \mathbb
+\usepackage{graphicx} % Allows for eps images
+\usepackage[dvips,letterpaper,margin=1in,bottom=1in]{geometry}
+\usepackage{tensor}
+\usepackage{mathrsfs}
+% Sets margins and page size
+\usepackage{amsmath}
+\usepackage{listings}
+
+\renewcommand{\labelenumi}{(\alph{enumi})} % Use letters for enumerate
+% \DeclareMathOperator{\Sample}{Sample}
+\let\vaccent=\v % rename builtin command \v{} to \vaccent{}
+\usepackage{enumerate}
+\renewcommand{\v}[1]{\ensuremath{\mathbf{#1}}} % for vectors
+\newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}} 
+% for vectors of Greek letters
+\newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}} % for unit vector
+\newcommand{\abs}[1]{\left| #1 \right|} % for absolute value
+\newcommand{\avg}[1]{\left< #1 \right>} % for average
+\let\underdot=\d % rename builtin command \d{} to \underdot{}
+\renewcommand{\d}[2]{\frac{d #1}{d #2}} % for derivatives
+\newcommand{\dd}[2]{\frac{d^2 #1}{d #2^2}} % for double derivatives
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}} 
+% for partial derivatives
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}} 
+% for double partial derivatives
+\newcommand{\pdc}[3]{\left( \frac{\partial #1}{\partial #2}
+	\right)_{#3}} % for thermodynamic partial derivatives
+\newcommand{\ket}[1]{\left| #1 \right>} % for Dirac bras
+\newcommand{\bra}[1]{\left< #1 \right|} % for Dirac kets
+\newcommand{\braket}[2]{\left< #1 \vphantom{#2} \right|
+	\left. #2 \vphantom{#1} \right>} % for Dirac brackets
+\newcommand{\matrixel}[3]{\left< #1 \vphantom{#2#3} \right|
+	#2 \left| #3 \vphantom{#1#2} \right>} % for Dirac matrix elements
+\newcommand{\grad}[1]{\gv{\nabla} #1} % for gradient
+\let\divsymb=\div % rename builtin command \div to \divsymb
+\renewcommand{\div}[1]{\gv{\nabla} \cdot \v{#1}} % for divergence
+\newcommand{\curl}[1]{\gv{\nabla} \times \v{#1}} % for curl
+\let\baraccent=\= % rename builtin command \= to \baraccent
+\renewcommand{\=}[1]{\stackrel{#1}{=}} % for putting numbers above =
+\providecommand{\wave}[1]{\v{\tilde{#1}}}
+\providecommand{\fr}{\frac}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\NN}{\mathbb{N}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\seq}{\subseteq}
+\providecommand{\e}{\epsilon}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{axiom}{Axiom}[section]
+\newtheorem{p}{Problem}
+\usepackage{cancel}
+\newtheorem*{lem}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+\newenvironment{s}[1]{%\small%
+	\begin{trivlist} \item \textbf{#1~\\\\}}{%
+		\hspace*{\fill}\\
+		\hspace*{\fill}
+	\end{trivlist}}%
+\setlength\parindent{15pt}
+
+% ***********************************************************
+% ********************** END HEADER *************************
+% ***********************************************************
+
+\begin{document}
+	{\noindent\Huge\bf  \\[0.5\baselineskip] {\fontfamily{cmr}\selectfont  
+			Asymptotic Tools
+	}}
+	\\[2\baselineskip] % Title
+	{{\bf \fontfamily{cmr}\selectfont David R. Hunter}\\ {\textit{\fontfamily{cmr}\selectfont Reconstituted by Jaeho, Chang}}}
+	
+	\section{Preliminaries}
+	\subsection{Limit superior and inferior}
+		\begin{dfn}
+			The limit superior of a sequence of a sequence $a_1,a_2,\cdots$ denoted $\lim\sup_na_n$, is the limit of the non-increasing sequence $\sup_{k\geq n}a_k$. The limit inferior, denoted $\lim\inf_na_n$, is the limit of the non-decreasing sequence $\inf_{k\geq n}a_k$.
+		\end{dfn}
+	\subsection{Differentiability, Taylor's Theorem}
+		\begin{thm}
+			If $f$ has $d$ derivatives at $a$, then
+			\begin{align}
+			f(x)=\sum_{i=0}^{d}\frac{f^{(i)}(a)(x-a)^i}{i!}+r_d(x,a)
+			\end{align}
+			where $\frac{r_d(x,a)}{(x-a)^d}\rightarrow0$ as $x\rightarrow a$. For example, if $f^{(d+1)}$ exists on the closed interval from $x$ to a,
+			\begin{align}
+			r_d(x,a)=\int_{a}^{x}\frac{f^{(d+1)}(t)(x-t)^d}{d!}dt\\
+			r_d(x,a)=\frac{f^{(d+1)}(c)(x-a)^{d+1}}{(d+1)!}
+			\end{align}
+			where $c$ exists between $x$ and $a$.
+		\end{thm}
+	\begin{thm}
+		Let $\exists f',g'$ on $N(c,\delta)\backslash\{c\}$ for some $c\in\mathbb{R},\delta>0$. If $\lim\limits_{x\rightarrow c}f(x)=\lim\limits_{x\rightarrow c}g(x)=0$ or $\lim\limits_{x\rightarrow c}f(x)=\lim\limits_{x\rightarrow c}g(x)=\infty$ then
+		\begin{align}
+		\lim\limits_{x\rightarrow c}\frac{f(x)}{g(x)}=\lim\limits_{x\rightarrow c}\frac{f'(x)}{g'(x)}
+		\end{align}
+	\end{thm}
+	\subsection{Order Notation}
+		\begin{dfn}
+			We say that the sequence of real numbers $a_1,a_2,\cdots$ is asymptotically equivalent to the sequence $b_1,b_2,\cdots$, written $a_n\sim b_n$, if $\frac{a_n}{b_n}\rightarrow1$ as $n\rightarrow\infty$.
+			That is,
+			\begin{align}
+			\left|1-\frac{a_n}{b_n}\right|\underset{n\rightarrow\infty}{\rightarrow}0
+			\end{align}
+		\end{dfn}
+	\begin{dfn}
+		We write $a_n=o(b_n)$ as $n\rightarrow\infty$ if $\frac{a_n}{b_n}\rightarrow0$ as $n\rightarrow\infty$.
+	\end{dfn}
+	\begin{dfn}
+	We write $a_n=O(b_n)$ as $n\rightarrow\infty$ if there exist $M>0$ and $N>0$ such that $\left|\frac{a_n}{b_n}\right|<M$ for all $n>N$.
+	\end{dfn}
+	For example, (1) may be rewritten as
+	\begin{align}
+		f(x)=\sum_{i=0}^{d-1}\frac{f^{(i)}(a)(x-a)^i}{i!}+\frac{\{f^{(d)}(a)+o(1)\}(x-a)^d}{d!}
+	\end{align}
+	as $x\rightarrow a$.
+	\section{Weak Convergence}
+	\subsection{Probabilistic Order Notation}
+		\begin{dfn}
+			We write $X_n=o_P(Y_n)$ if $\frac{X_n}{Y_n}\overset{P}{\rightarrow}0$.
+		\end{dfn}
+		\begin{dfn}
+			We write $X_n=O_P(Y_n)$ if for any $\epsilon>0$ there exist $M$ and $N$ such that
+			\begin{align}
+			P\left(\left|\frac{X_n}{Y_n}\right|<M\right)>1-\epsilon\quad\forall n>N.
+			\end{align}
+		\end{dfn}
+		If $X_n=O_P(1)$, we say that $X_n$ is \textit{bounded in probability}.
+	\begin{thm}
+		Suppose that $X_n\overset{P}{\rightarrow}\theta_0$ for a sequence of random variables $X_1,X_2,\cdots$ and a constant $\theta_0$. Furthermore, suppose that $f$ has $d$ derivatives at the point $\theta_0$. Then there is a random variable $Y_n$ such that
+		\begin{align}
+			f(X_n)=\sum_{i=0}^{d-1}\frac{f^{(i)}(\theta_0)(X_n-\theta_0)^i}{i!}+\frac{\{f^{(d)}(\theta_0)+Y_n\}(X_n-\theta_0)^d}{d!}
+		\end{align}
+		and $Y_n=o_P(1)$ as $n\rightarrow\infty$.
+	\end{thm}
+	\subsection{Convergence in Distribuion(Law)}
+		Any distribution function $F(x)$ is nondecreasing and right-continuous, and it has limits 0 and 1 for each cases $x\rightarrow-\infty$ and $x\rightarrow\infty$. 
+		\begin{dfn}
+			Suppose that $X$ has distribution function $F(x)$ and that $X_n$ has distribution function $F_n(x)$. We say $X_n$ converges in distribution to $X$, written $X_n\overset{d}{\rightarrow}X$ or $X_n\overset{\mathcal{L}}{\rightarrow}X$, if $F_n(x)\overset{}{\rightarrow}F(x)$ as $n\overset{}{\rightarrow}\infty$ for all $x$ at which $F(x)$ is continuous.
+		\end{dfn}
+	\begin{thm}
+		If $X_n\overset{P}{\rightarrow}X$, then $X_n\overset{d}{\rightarrow}X$.
+	\end{thm}
+	\begin{thm}
+	$X_n\overset{d}{\rightarrow}c$ iff $X_n\overset{P}{\rightarrow}c$.
+	\end{thm}
+	\subsection{Convergence in Mean}
+		\begin{dfn}
+			Let $a$ be a postive constant. We say that $X_n$ converges in $a^{th}$ mean to $X$, written $X_n\overset{a}{\rightarrow}X$, if
+			\begin{align}
+			E|X_n-X|^a\overset{n\overset{}{\rightarrow}\infty}{\rightarrow}0.
+			\end{align}
+			Especially, we denote the case when $a=2$ in the above expression by $X_n\overset{qm}{\rightarrow}X$.
+		\end{dfn}
+	\begin{thm}
+		~\\(a) For a constant $c$, $X_n\overset{qm}{\rightarrow}c$ iff $E(X_n)\overset{}{\rightarrow}c$ and $V(X_n)\overset{}{\rightarrow}0$.\\
+		(b) For fixed $a>0$, $X_n\overset{a}{\rightarrow}X$ implies $X_n\overset{P}{\rightarrow}X$.
+	\end{thm}
+\subsection{Consistent Estimates of the Mean}
+\begin{thm}
+	WLLN\\Suppose that $X_1,X_2,\cdots\overset{iid}{\sim}f(\cdot)$ with finite mean $\mu$. Then $\bar{X}_n\overset{P}{\rightarrow}\mu$.
+\end{thm}
+\subsubsection{Independent but not Identically Distributed Variables}
+Let $X_1,X_2,\cdots$ have the same mean but different variances. Since $\bar{X}_n$ is unbiased, if $V(\bar{X}_n)$ tends to $0$ as $n\overset{}{\rightarrow}\infty$, it is consistent. That is,
+\begin{align}
+\bar{X}_n\overset{P}{\rightarrow}\mu\text{\quad if\quad}\sum_{i=1}^{n}\sigma_i^2=o(n^2).
+\end{align}
+Alternative for sample mean :
+\begin{align}
+\hat{\mu}_n=\frac{\sum_{i=1}^nc_iX_i}{\sum_{i=1}^nc_i}
+\end{align}
+for some sequence of positive constants $c_1,c_2,\cdots$. $\hat{\mu}_n$ is unbiased so we now investigate if its variance tends to zero as $n\overset{}{\rightarrow}\infty$.
+\begin{align}
+V(\hat{\mu}_n)=\frac{\sum_{i=1}^nc_i^2\sigma_i^2}{(\sum_{i=1}^nc_i)^2}:=\sum_{i=1}^n\gamma_i^2\sigma_i^2
+\end{align}
+The minimizer of $V(\hat{\mu}_n)$ with respect to $\gamma_1,\cdots,\gamma_{n-1},\gamma_n(=1-\sum_{i=1}^{n-1}\gamma_i)$ obtains the equations :
+\begin{align}
+\gamma_i\sigma_i^2=\gamma_n\sigma_n^2,\quad i\in\{1,\cdots,n-1\},
+\end{align}
+which means $c_i=\frac{c_n\sigma_n^2}{\sigma_i^2}$. Therefore 
+\begin{align}
+\hat{\mu}_n=\frac{\sum_{i=1}^n\frac{X_i}{\sigma_i^2}}{\sum_{i=1}^n\frac{1}{\sigma_i^2}}
+\end{align}
+whose variance is
+\begin{align}
+V(\hat{\mu}_n)=\frac{1}{\sum_{i=1}^n\frac{1}{\sigma_i^2}}
+\end{align}
+\subsubsection{Identically Distributed but not Independent Variables}
+Suppose that $X_1,X_2,\cdots$ have the same mean and variance, say $\mu$ and $\sigma^2$, but that they are not necessarily independent. We still have $E(\bar{X}_n)=\mu$ so it's consistent if its variance tends to zero.
+\begin{align}
+V(\bar{X}_n)=\frac{1}{n^2}\sum_{i=1}^n\sum_{j=1}^nVar(X_i,X_j)=\frac{\sigma^2}{n}+\frac{2}{n^2}\underset{i<j}{\sum\sum}Var(X_i,X_j)
+\end{align}
+Now if we add the 'exchangeable' assumption, $Var(X_i,X_j)=Var(X_1,X_2)$ $\forall i\neq j$. Therefore (16) reduces to
+\begin{align}
+V(\bar{X}_n)=\frac{\sigma^2}{n}+\frac{n-1}{n}Var(X_1,X_2)
+\end{align}
+which implies that $Var(\bar{X}_n)\overset{}{\rightarrow}Var(X_1,X_2)$ as $n\overset{}{\rightarrow}\infty$.
+\begin{dfn}
+	The sequence $X_1,X_2,\cdots$ is said to be stationary if, for a fixed $k\geq0$, the joint distribution of $(X_i,\cdots,X_{i+k})$ is the same no matter what positive value of $i$ is chosen.
+\end{dfn}
+\begin{lem}
+	Under stationary sequence assumption,
+	\begin{align}
+	(16)=\frac{\sigma^2}{n}+\frac{2}{n^2}\sum_{k=1}^{n-1}(n-k)Var(X_1,X_1+k)
+	\end{align}
+	and this tends to 0 as $n\overset{}{\rightarrow}\infty$ if $\sigma^2<\infty$ and $Var(X_1,X_{1+k})\overset{}{\rightarrow}0$ as $k\overset{}{\rightarrow}0$.
+\end{lem}
+\begin{dfn}
+	For $m\geq0$, the sequence $X_1,X_2,\cdots$ is called $m$-dependent if the random vectors $(X_1,\cdots,X_i)$ and $(X_j,X_{j+1},\cdots)$ are independent whenever $j-i>m$.
+\end{dfn}
+Any stationary $m$-dependent sequence with finite variance is consistent. Also, any independent sequence is 0-dependent.
+\end{document}

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KustaR : Orientation</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'KustaR : Orientation',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: '01_Orientation_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Jaeho, Jang' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <link href="01_Orientation_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="01_Orientation_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="01_Orientation_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="01_Orientation_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="01_Orientation_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    summary {
+      display: list-item;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
+
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url(01_Orientation_files/logo.png) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="01_Orientation_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">7/10/2019</p>
+          </hgroup>
+  </slide>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('slide:not(.backdrop):not(.title-slide)').append('<div class=\"footnotes\">');
+
+    $('footnote').each(function(index) {
+      var text  = $(this).html();
+      var fnNum = (index+1).toString().sup();
+      $(this).html(text + fnNum);
+
+      var footnote   = fnNum + ' : ' + $(this).attr('content') + '<br/>';
+      var oldContent = $(this).parents('slide').children('div.footnotes').html();
+      var newContent = oldContent + footnote;
+      $(this).parents('slide').children('div.footnotes').html(newContent);
+    });
+  });
+</script>
+
+<style>
+div.footnotes {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  width: 80%;
+  font-size: 0.6em;
+}
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+logo {
+  position:absolute;
+   top:90px;
+   left:-10px;
+}
+</style>
+
+<slide class=""><hgroup><h2>Tutor</h2></hgroup><article  id="tutor">
+
+<ol>
+<li><p>Name : Jaeho, Jang<br/>Contact me through <a href='mailto:foxeyboy@konkuk.ac.kr' title=''>foxeyboy@konkuk.ac.kr</a></p></li>
+<li><p>Education backgrounds<br/>B.A. in Applied Statistics, Konkuk Univ. (2012-2018)<br/>M.A. in Applied Statistics, Konkuk Univ. (Adv. : Dr.Kyusang, Yu)</p></li>
+<li>Experience</li>
+</ol>
+
+<ul>
+<li><p>Data Analysis<br/>Korea University Medical Centre collaborating with SK C&amp;C (July 2018 ~ September 2018)</p></li>
+<li><p>Statistical Consultation for academia &amp; business</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Before we begin</h2></hgroup><article  id="before-we-begin">
+
+<ul>
+<li><p><strong>Don’t hesitate</strong> to question and participate whether it is critical or not</p></li>
+<li><p>We may cover some advanced or theoretical contents.</p></li>
+<li><p>Homework (or team works) will be assigned every two weeks.</p></li>
+<li><p>Google Drive (Invitation email will be sented)</p></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Materials to talk on</h2></hgroup><article  id="materials-to-talk-on">
+
+</article></slide><slide class=""><hgroup><h2>Subjects <footnote content="* denotes the optional materials"></footnote></h2></hgroup><article  id="subjects">
+
+<p>■ Accessing the data</p>
+
+<p>Data structure, Input</p>
+
+<p>■ Data manipulation</p>
+
+<p><code>sqldf</code>, <code>dplyr</code>, <code>data.table</code>, <code>reshape2</code>, <code>lubridate</code>, <code>mice*</code></p>
+
+<p>■ Visualization</p>
+
+<p><code>ggplot2</code>, <code>lattice*</code></p>
+
+<p>■ Modeling : (Generalized) Linear models, Power analysis, Bootstrapping, PCA &amp; FA, Time series</p>
+
+<p><code>glm</code>, <code>glmnet</code>, <code>ts</code>, <code>ncpen*</code></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Accessing the data</h2></hgroup><article  id="accessing-the-data">
+
+</article></slide><slide class=""><hgroup><h2>Vectors</h2></hgroup><article  id="vectors">
+
+<pre class = 'prettyprint lang-r'>a &lt;- c(1, 2, 5, 3, 6, -2, 4)
+a[3]</pre>
+
+<pre >## [1] 5</pre>
+
+<pre class = 'prettyprint lang-r'>a[c(1, 3, 5)]</pre>
+
+<pre >## [1] 1 5 6</pre>
+
+<pre class = 'prettyprint lang-r'>a[2:6]</pre>
+
+<pre >## [1]  2  5  3  6 -2</pre>
+
+</article></slide><slide class=""><hgroup><h2>Creating Matrices</h2></hgroup><article  id="creating-matrices">
+
+<pre class = 'prettyprint lang-r'>y &lt;- matrix(1:20, nrow=5, ncol=4)
+y</pre>
+
+<pre >##      [,1] [,2] [,3] [,4]
+## [1,]    1    6   11   16
+## [2,]    2    7   12   17
+## [3,]    3    8   13   18
+## [4,]    4    9   14   19
+## [5,]    5   10   15   20</pre>
+
+<pre class = 'prettyprint lang-r'>cells    &lt;- c(1,26,24,68)
+rnames   &lt;- c(&quot;R1&quot;, &quot;R2&quot;)
+cnames   &lt;- c(&quot;C1&quot;, &quot;C2&quot;) 
+mymatrix &lt;- matrix(cells, nrow=2, ncol=2, byrow=TRUE,
+                   dimnames=list(rnames, cnames)) 
+mymatrix</pre>
+
+<pre >##    C1 C2
+## R1  1 26
+## R2 24 68</pre>
+
+<pre class = 'prettyprint lang-r'>mymatrix &lt;- matrix(cells, nrow=2, ncol=2, byrow=FALSE,
+                   dimnames=list(rnames, cnames))
+mymatrix</pre>
+
+<pre >##    C1 C2
+## R1  1 24
+## R2 26 68</pre>
+
+</article></slide><slide class=""><hgroup><h2>Creating arrays</h2></hgroup><article  id="creating-arrays">
+
+<pre class = 'prettyprint lang-r'>dim1 &lt;- c(&quot;A1&quot;, &quot;A2&quot;)
+dim2 &lt;- c(&quot;B1&quot;, &quot;B2&quot;, &quot;B3&quot;)
+dim3 &lt;- c(&quot;C1&quot;, &quot;C2&quot;, &quot;C3&quot;, &quot;C4&quot;)
+z &lt;- array(1:(2*3*4), c(2,3,4), dimnames=list(dim1, dim2, dim3))
+z</pre>
+
+<pre >## , , C1
+## 
+##    B1 B2 B3
+## A1  1  3  5
+## A2  2  4  6
+## 
+## , , C2
+## 
+##    B1 B2 B3
+## A1  7  9 11
+## A2  8 10 12
+## 
+## , , C3
+## 
+##    B1 B2 B3
+## A1 13 15 17
+## A2 14 16 18
+## 
+## , , C4
+## 
+##    B1 B2 B3
+## A1 19 21 23
+## A2 20 22 24</pre>
+
+</article></slide><slide class=""><hgroup><h2>Creating data.frames</h2></hgroup><article  id="creating-data.frames">
+
+<pre class = 'prettyprint lang-r'>patientID &lt;- c(1, 2, 3, 4)
+age &lt;- c(25, 34, 28, 52)
+diabetes &lt;- c(&quot;Type1&quot;, &quot;Type2&quot;, &quot;Type1&quot;, &quot;Type1&quot;)
+status &lt;- c(&quot;Poor&quot;, &quot;Improved&quot;, &quot;Excellent&quot;, &quot;Poor&quot;)
+patientdata &lt;- data.frame(patientID, age, diabetes, status)
+patientdata</pre>
+
+<pre >##   patientID age diabetes    status
+## 1         1  25    Type1      Poor
+## 2         2  34    Type2  Improved
+## 3         3  28    Type1 Excellent
+## 4         4  52    Type1      Poor</pre>
+
+<pre class = 'prettyprint lang-r'>patientdata[1:2]</pre>
+
+<pre >##   patientID age
+## 1         1  25
+## 2         2  34
+## 3         3  28
+## 4         4  52</pre>
+
+<pre class = 'prettyprint lang-r'>patientdata[c(&quot;diabetes&quot;,&quot;status&quot;)]</pre>
+
+<pre >##   diabetes    status
+## 1    Type1      Poor
+## 2    Type2  Improved
+## 3    Type1 Excellent
+## 4    Type1      Poor</pre>
+
+<pre class = 'prettyprint lang-r'>patientdata$age</pre>
+
+<pre >## [1] 25 34 28 52</pre>
+
+</article></slide><slide class=""><hgroup><h2>Using factors</h2></hgroup><article  id="using-factors">
+
+<pre class = 'prettyprint lang-r'>patientID &lt;- c(1, 2, 3, 4)
+age &lt;- c(25, 34, 28, 52)
+diabetes &lt;- c(&quot;Type1&quot;, &quot;Type2&quot;, &quot;Type1&quot;, &quot;Type1&quot;)
+status &lt;- c(&quot;Poor&quot;, &quot;Improved&quot;, &quot;Excellent&quot;, &quot;Poor&quot;)
+diabetes &lt;- factor(diabetes)
+status &lt;- factor(status, order=TRUE)
+patientdata &lt;- data.frame(patientID, age, diabetes, status)
+str(patientdata)                               </pre>
+
+<pre >## &#39;data.frame&#39;:    4 obs. of  4 variables:
+##  $ patientID: num  1 2 3 4
+##  $ age      : num  25 34 28 52
+##  $ diabetes : Factor w/ 2 levels &quot;Type1&quot;,&quot;Type2&quot;: 1 2 1 1
+##  $ status   : Ord.factor w/ 3 levels &quot;Excellent&quot;&lt;&quot;Improved&quot;&lt;..: 3 2 1 3</pre>
+
+<pre class = 'prettyprint lang-r'>summary(patientdata)</pre>
+
+<pre >##    patientID         age         diabetes       status 
+##  Min.   :1.00   Min.   :25.00   Type1:3   Excellent:1  
+##  1st Qu.:1.75   1st Qu.:27.25   Type2:1   Improved :1  
+##  Median :2.50   Median :31.00             Poor     :2  
+##  Mean   :2.50   Mean   :34.75                          
+##  3rd Qu.:3.25   3rd Qu.:38.50                          
+##  Max.   :4.00   Max.   :52.00</pre>
+
+</article></slide><slide class=""><hgroup><h2>Lists</h2></hgroup><article  id="lists">
+
+<pre class = 'prettyprint lang-r'>g &lt;- &quot;My First List&quot;
+h &lt;- c(25, 26, 18, 39)
+j &lt;- matrix(1:10, nrow=5)
+k &lt;- c(&quot;one&quot;, &quot;two&quot;, &quot;three&quot;)
+mylist &lt;- list(title=g, ages=h, j, k)
+mylist</pre>
+
+<pre >## $title
+## [1] &quot;My First List&quot;
+## 
+## $ages
+## [1] 25 26 18 39
+## 
+## [[3]]
+##      [,1] [,2]
+## [1,]    1    6
+## [2,]    2    7
+## [3,]    3    8
+## [4,]    4    9
+## [5,]    5   10
+## 
+## [[4]]
+## [1] &quot;one&quot;   &quot;two&quot;   &quot;three&quot;</pre>
+
+</article></slide><slide class=""><hgroup><h2>Coding Test</h2></hgroup><article  id="coding-test">
+
+<p><a href='http://codingdojang.com/scode/tag/849' title=''>http://codingdojang.com/scode/tag/849</a></p>
+
+</article></slide><slide class=""><hgroup><h2>Coding Test</h2></hgroup><article  id="coding-test-1">
+
+<pre class = 'prettyprint lang-r'>set.seed(0536)
+org &lt;- split(sample(1:30, 18, replace = F), 1:3)
+a &lt;- org$`1`
+b &lt;- org$`2`
+c &lt;- org$`3`</pre>
+
+<pre class = 'prettyprint lang-r'>int &lt;- sort(c(a, b, c))
+eg &lt;- combn(int, 2)
+trues &lt;- matrix(0, nrow = 2)
+for (i in 1:ncol(eg)) {
+  interval.v &lt;- eg[1, i]:eg[2, i]
+  test &lt;- all(any(a %in% interval.v),any(b %in% interval.v),any(c %in% interval.v))
+  if (test == 1) {trues &lt;- cbind(trues, eg[,i])}
+}
+trues &lt;- trues[,-1]
+trues[,which.min(trues[2,] - trues[1,])]</pre>
+
+<pre >## [1] 4 6</pre></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

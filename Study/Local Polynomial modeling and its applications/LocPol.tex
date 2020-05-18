@@ -1,0 +1,532 @@
+% ***********************************************************
+% ******************* PHYSICS HEADER ************************
+% ***********************************************************
+% Version 2
+\documentclass[12pt]{article}
+\usepackage{amsmath} % AMS Math Package
+\usepackage{amsthm} % Theorem Formatting
+\usepackage{amssymb}    % Math symbols such as \mathbb
+\usepackage{graphicx} % Allows for eps images
+\usepackage[dvips,letterpaper,margin=1in,bottom=1in]{geometry}
+\usepackage{tensor}
+\usepackage{mathrsfs}
+% Sets margins and page size
+\usepackage{amsmath}
+\usepackage{listings}
+
+\renewcommand{\labelenumi}{(\alph{enumi})} % Use letters for enumerate
+% \DeclareMathOperator{\Sample}{Sample}
+\let\vaccent=\v % rename builtin command \v{} to \vaccent{}
+\usepackage{enumerate}
+\renewcommand{\v}[1]{\ensuremath{\mathbf{#1}}} % for vectors
+\newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}} 
+% for vectors of Greek letters
+\newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}} % for unit vector
+\newcommand{\abs}[1]{\left| #1 \right|} % for absolute value
+\newcommand{\avg}[1]{\left< #1 \right>} % for average
+\let\underdot=\d % rename builtin command \d{} to \underdot{}
+\renewcommand{\d}[2]{\frac{d #1}{d #2}} % for derivatives
+\newcommand{\dd}[2]{\frac{d^2 #1}{d #2^2}} % for double derivatives
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}} 
+% for partial derivatives
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}} 
+% for double partial derivatives
+\newcommand{\pdc}[3]{\left( \frac{\partial #1}{\partial #2}
+	\right)_{#3}} % for thermodynamic partial derivatives
+\newcommand{\ket}[1]{\left| #1 \right>} % for Dirac bras
+\newcommand{\bra}[1]{\left< #1 \right|} % for Dirac kets
+\newcommand{\braket}[2]{\left< #1 \vphantom{#2} \right|
+	\left. #2 \vphantom{#1} \right>} % for Dirac brackets
+\newcommand{\matrixel}[3]{\left< #1 \vphantom{#2#3} \right|
+	#2 \left| #3 \vphantom{#1#2} \right>} % for Dirac matrix elements
+\newcommand{\grad}[1]{\gv{\nabla} #1} % for gradient
+\let\divsymb=\div % rename builtin command \div to \divsymb
+\renewcommand{\div}[1]{\gv{\nabla} \cdot \v{#1}} % for divergence
+\newcommand{\curl}[1]{\gv{\nabla} \times \v{#1}} % for curl
+\let\baraccent=\= % rename builtin command \= to \baraccent
+\renewcommand{\=}[1]{\stackrel{#1}{=}} % for putting numbers above =
+\providecommand{\wave}[1]{\v{\tilde{#1}}}
+\providecommand{\fr}{\frac}
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\NN}{\mathbb{N}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\seq}{\subseteq}
+\providecommand{\e}{\epsilon}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{axiom}{Axiom}[section]
+\newtheorem{p}{Problem}
+\usepackage{cancel}
+\newtheorem*{lem}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+\newenvironment{s}[1]{%\small%
+	\begin{trivlist} \item \textbf{#1~\\\\}}{%
+		\hspace*{\fill}\\
+		\hspace*{\fill}
+	\end{trivlist}}%
+\setlength\parindent{15pt}
+
+% ***********************************************************
+% ********************** END HEADER *************************
+% ***********************************************************
+
+\begin{document}
+	{\noindent\Huge\bf  \\[0.5\baselineskip] {\fontfamily{cmr}\selectfont  
+			Local Polynomial Modeling and \\its Applications
+		}}
+	\\[2\baselineskip] % Title
+	{{\bf \fontfamily{cmr}\selectfont J.Fan and I.Gijbels}\\ {\textit{\fontfamily{cmr}\selectfont Reconstituted by Jaeho, Chang}}}
+		
+	\tableofcontents
+	\newpage
+		
+	\section{Overview of existing methods : p.13 $\sim$}
+	\subsection{Introduction}
+		Assume that we have independently identically distributed observations $( X_i , Y_i ) , \cdots , ( X_n , Y_n)$. Let $( X , Y )$ denote a generic member of the sample, whose conditional mean and conditional variance are denoted respectively by
+		\begin{align}
+		m(x)=E(Y|X=x)\text{ and }\sigma^2(x)=Var(Y|X=x).
+		\end{align}
+		Many important applications involve estimation of the regression function $m(x)$ or its $\nu^{th}$-derivative $m^{(\nu)}(x)$.
+		
+		The performance of an estimator $\hat{m}_{\nu}(x)$ of $m^{(\nu)}(x)$ is conveniently assessed via its Mean Squared Error (MSE) or its Mean Integrated Squared Error (MISE) defined respectively by
+		\begin{align}
+		MSE(x)=E[\{ \hat{m}_{\nu}(x)-m^{(\nu)}(x) \}^2|X_1^n]
+		\end{align}
+		where $X_1^n=(X_1,\cdots,X_n)$, and $MISE=\int MSE(x)w(x)dx$ with $w\geq0$ a weight function.
+		
+		When the MSE-criterion is used, it is understood that the main objective is to estimate the function $m^{(\nu)}(\cdot)$ at the point $x$, and when the MISE-criterion is used, the main goal is to recover the whole curve. It can be easily seen that the MSE has the following bias-variance decomposition:
+		\begin{align}
+		MSE(x)=[E\{\hat{m}_{\nu}(x)|X_1^n\}-m^{(\nu)}(x)]^2+Var\{\hat{m}_{\nu}(x)|X_1^n\}.
+		\end{align}
+\subsection{Kernel estimators}
+	The Nadaraya-Watson local constant Kernel estimator is given by
+	\begin{align}
+	\hat{m}_h(x)=\frac{\sum_iK_h(x-X_i)Y_i}{\sum_iK_h(x-X_i)}.
+	\end{align}
+	Commonly used kernel functions include the Gaussian and the symmetric Beta family kernels :
+	\begin{align}
+	K(t;\gamma)=\frac{(1-t^2)^{\gamma}_+}{Beta(1/2,\gamma+1)},\quad\gamma\in\mathbb{N}\cup\{0\}.
+	\end{align}
+	Remark that the Beta family includes the most widely used kernel functions, even the Gaussian kernel in the limit as $\gamma\rightarrow\infty$.
+
+\subsection{Gasser–Müller estimator}
+	The random denominator in (4) is inconvenient, when taking derivatives of the estimator and when deriving its asymptotic properties. Assume that the data have already been sorted according to the $X$-variable. Gasser and Müller (1979) proposed the following estimator :
+	\begin{align}
+	\hat{m}_h(x)=\sum_{i=1}^nY_i\int_{s_i-1}^{s_i}K_h(u-x)du
+	\end{align}
+	with $s_i=(X_i+X_{i+1})/2$, $X_0=-\infty$ and $X_{n+1}=\infty$. Note that the sum of the weights in (6) is one.
+	\begin{table}[!htbp] \centering 
+		\caption{Pointwise asymptotic bias and variance of kernel regression smoothers}
+		\begin{tabular}{@{\extracolsep{5pt}} cccc} 
+			\\[-1.8ex]\hline 
+			\hline \\[-1.8ex] 
+			& Method & Bias & Variance \\ 
+			\hline \\[-1.8ex] 
+			1 & Nadaraya-Watson & $\left\{m''(x)+\frac{2m'(x)f'(x)}{f(x)}\right\}b_n$ & $V_n$ \\ 
+			2 & Gasser–Müller & $m''(x)b_n$ & $1.5V_n$ \\ 
+			3 & Local linear & $m''(x)b_n$ & $V_n$ \\ 
+			\hline \\[-1.8ex] 
+		\end{tabular}
+		\\Here, $b_n=\frac{h^2}{2}\,\mu_2(K)$ and $V_n=\frac{\sigma^2(x)}{f(x)nh}\,\mu_0(K^2)$.
+	\end{table}
+
+\subsection{Local polynomial fitting and derivative estimation}
+	Linear approximation of $m$ at $x$ and the weighted least squares problem :
+	\begin{align}
+	m(z)\approx\sum_{j=0}^p\frac{m^{(j)}(x)}{j!}(z-x)^j\equiv\sum_{j=0}^p\beta_j(z-x)^j
+	\end{align}
+	\begin{align}
+	\sum_{i=1}^n\left\{Y_i-\sum_{j=0}^p\beta_j(X_i-x)^j\right\}^2K_h(X_i-x)
+	\end{align}
+	The above expostion suggests that an estimator for $\hat{m}_{\nu}(x)=\nu!\hat{\beta}_{\nu}$.\\
+	In order to have a satisfactory modeling bias, the degree $p$ of the polynomial often has to be large. But this large degree $p$ introduces an over-parametrization, resulting in a large variability of the estimated parameters. As a consequence the estimated regression function is numerically unstable. In marked contrast to this parametric approach, our technique is local, and hence requires a small degree of the local polynomial.
+	
+	It is clear that $h=0$ results in an estimate which essentially interpolates the data, while $h=\infty$ is equivalent to a linear model $m(x)=a+bx$. Therefore $\hat{m}_0$ ranges from the most complex model to the simplest model.
+	With $p=1$, the estimator $\hat{m}_0(x)$ is termed a local linear regression smoother or a local linear fit. This estimator can be explicitly expressed as :
+	\begin{align}
+	\hat{m}_0(x)=\frac{\sum_{i=1}^nw_iY_i}{\sum_{i=1}^nw_i},\quad w_i=K_h(X_i-x)\{S_{n,2}-(X_i-x)S_{n,1}\}\\
+	S_{n,j}=\sum_{i=1}^nK_h(X_i-x)(X_i-x)^j.
+	\end{align}
+
+\subsection{Robust locally weighted regression}
+	LOcally WEighted Scatter plot Smoothing(LOWESS), introduced by Cleveland(1979), robustifies the locally weighted least squares method discussed above.
+	\begin{itemize}
+		\item[Step.1] Fit a polynomial of degree $p$ locally via (8).
+		\item[Step.2] Calculate the residuals and assign weights to each residual : large residuals receive small weights.
+		\item[Step.3] Fit a local polynomial again with the weights.
+	\end{itemize}
+	In his LOWESS method Cleveland (1979) uses the tricube kernel :
+	\begin{align}
+	K(t)=\frac{70}{81}(1-|t|^3)^3,\quad t\in[-1,1]
+	\end{align}
+	One of the reasons for choosing this particular weight function is that it descends smoothly to 0. The local neighborhoods are further determined by a nearest neighbor bandwidth. \\
+	Let $0<d\leq1$, and consider $nd$, a quantity referring to a portion of the data. Round $nd$ to the nearest integer, denoted by $r=[nd]$.
+	\begin{align}
+	h_k=r^{th}\text{ smallest number among }|X_k-X_j|,\quad j\in\{1,\cdots,n\}\\
+	K_{h_k}(X_i-X_k)=K\left\{\frac{X_i-X_k}{h_k}\right\}/h_k\\
+	\sum_{i=1}^n\left\{Y_i-\sum_{j=0}^p\beta_j(X_i-X_j)^j
+	\right\}^2K_{h_k}(X_i-X_j)
+	\end{align}
+	The fitted value is given by $\hat{Y}_k=\hat{\beta}_0=\hat{\beta}_0(X_k)=\sum_{i=1}^nw_i(X_k)Y_i$.
+	\begin{align}
+	r_k=Y_k-\hat{Y}_k,\quad k\in\{1,\cdots,n\}\\
+	\delta_i=B\left(\frac{r_i}{6*med\{|r_1|,\cdots,|r_n|\}}\right),\quad B(t)=(1-t^2)^2I_{[-1,1]}(t)
+	\end{align}
+	Now compute a new fitted value $\hat{Y}_k$ by fitting locally a $p^{th}$ order polynomial, using now the weight $\delta_ih_kK_{h_k}(X_i-X_k)$. To sum up,
+	\begin{itemize}
+		\item[1.] For each $k$ do a locally weighted regression (14) with weights as in (13). Compute the fitted value $\hat{Y}_k$, and the residual $r_k$ via (15)
+		\item[2.] Calculate the robustness weights $\delta_i,\,i=1,\cdots,n,$ as defined in (16).
+		\item[3.] For each $k$ compute a new fitted value $\hat{Y}_k$ by carrying through a locally weighted regression (14) with weights $\delta_ih_kK_{h_k}(X_i-X_k)$.
+		\item[4.] descriptionRepeat steps 2 and 3 a total of $N$ times. The final fitted values yield the estimated curve.
+	\end{itemize}
+	Cleveland (1979) recommends using $p=1$ and $N=3$. The bandwidth depends on $d$ and for this quantity a choice between 0.2 and 0.8 seems to be reasonable. For more details see Cleveland (1979).
+
+\subsection{Orthogonal series based methods}
+	Assume that the function $m\in L^2[0,1]$, the function space of square integrable functions on $[0,1]$, and that the series $\{q_i(x)\,;i=1,2,\cdots\}$ is a complete orthonormal basis :
+	\begin{align}
+	\int_{0}^{1}q_i(x)q_j(x)dx=\delta_{ij},
+	\end{align}
+	where $\delta_{ij}=I(i=j)$. Therefore, the function $m$ admits the orthogonal expansion : $m(x)=\sum_{j=1}^\infty\theta_jq_j(x)$ with $\theta_j=\int q_j(x)m(x)dx$. A natural estimator of the parameter $\theta_j$ is
+	\begin{align}
+	\hat{\theta}_j=\frac{\sum_{i=1}^nq_j(x_i)Y_i}{n}.
+	\end{align}
+	A classical reconstruction of $m$ is based on the truncated subseries :
+	\begin{align}
+	\hat{m}(x)=\sum_{j=1}^N\hat{\theta}_jq_j(x),
+	\end{align}
+	where $N$, depending on $n$ and tending to $\infty$, is a smoothing parameter. (19) can be regarded approximately as a least squares estimator :
+	\begin{align}
+	\underset{\theta}{\arg\min}\sum_{i=1}^n\left\{Y_i-\sum_{j=1}^N\theta_jq_j(x_i)\right\}^2
+	\end{align}
+	based on the model assumption $m(x)=\sum_{j=1}^N\theta_jq_j(x)$. Indeed, the design matrix $\{q_j(x_i)\}$ is nearly orthonormal as evidenced by
+	\begin{align}
+	\frac{\sum_{i=1}^nq_j(x_i)q_k(x_i)}{n}\approx\int_{0}^{1}q_j(x)q_k(x)dx=\delta_{jk},
+	\end{align}
+	and hence the least squares estimate of $\theta_j$ is approximately $\hat{\theta}_j$. For the Fourier basis, $q_1(x)=1$, $q_{2k}(x)=\sqrt{2}\cos(2\pi kx)$, $q_{2k+1}(x)=\sqrt{2}\sin(2\pi kx)$, $k=1,2,\cdots$, the design matrix is exactly orthonormal and hence the estimator is precisely a least squares estimate.
+
+\subsection{Polynomial spline}
+	Let $t_1,\cdots,t_J$ be a fixed knot sequence such that $-\infty<t_1<\cdots<t_J<\infty$. Then, the cubic spline functions are twice continuously differentiable functions $s$ such that the restriction of $s$ to each of the intervals $(-\infty,t_1],[t_1,t_2],\cdots,[t_{J-1},t_J],[t_J,\infty)$ is a cubic polynomial. The collection of all cubic spline functions forms a $(J+4)$-dimensional linear space. There are two popular cubic spline bases for this linear space :
+	\begin{align}
+	\text{power basis : }(x-t_j)^3_+,(j=1,\cdots,J),1,x,x^2,x^3\\
+	\text{B-spline basis : }B_j(x)=I_{[\,t_j,t_{j+1})}(x)
+	\end{align}
+	Let $B_1,\cdots,B_{J+4}$ be a cubic spline basis. Then, a cubic spline function can be expressed as
+	\begin{align}
+	s(x)=\sum_{j=1}^{J+4}\theta_jB_j(x).
+	\end{align}
+	For the given knots the spline method consists of finding the best spline approximation via the following least squares regresssion :
+	\begin{align}
+	\underset{\theta}{\min}\sum_{i=1}^n\left\{Y_i-\sum_{j=1}^{J+4}\theta_jB_j(X_i)\right\}^2.
+	\end{align}
+	Then the spline approach estimates $m$ by the spline function $\hat{m}(x)=\sum_{j=1}^{J+4}\hat{\theta}_jB_j(x)$.\\
+	For the rest of overview, see page. 42$~\sim$.
+
+\subsection{Density Estimation}
+	\begin{align}
+	\hat{f}_h(x)=\frac{\sum_{i=1}^nK_h(X_i-x)}{n}\\
+	MSE(x)\approx\frac{1}{4}\left\{\int u^2K(u)du\right\}^2+\frac{f(x)}{nh}\int K^2(u)du
+	\end{align}
+
+\section{Framework for local polynomial regression : p.57 $\sim$}
+\subsection{Introduction}
+	Consider the bivariate data $( X_1 , Y_1 ) , \cdots , ( X_n , Y_n )$, which form an independent and identically distributed sample from a population $(X, Y)$. Of interest is to estimate the regression function $m(x_0)=E(Y|X=x_0)$ and its derivatives $m'(x_0), m''(x_0),\cdots,m^{(p)}(x_0)$. To help us understand the estimation methodology, we can regard the data as being generated from the model
+	\begin{align}
+	Y=m(X) + \sigma(X)\epsilon,
+	\end{align}
+	where $E(\epsilon)=0$, $Var(\epsilon)=1$, and $X$ and $\epsilon$ are independent(this \textit{location-scale model} assumption is not necessary). We always denote the conditional variance of $Y$ given $X=x_0$ by $\sigma^2(x_0)$ and the marginal density of $X$, i.e. the \textit{design density}, by $f$. Suppose that the $(p+ 1)^{th}$ derivative of $m(x)$ at the point $x_0$ exists. We then approximate the unknown regression function $m(x)$ locally by a polynomial of order $p$. A Taylor expansion gives, for $x$ in a neighborhood of $x_0$,
+	\begin{align}
+	m(x)\approx m(x_0)+m'(x_0)(x-x_0)+\frac{m''(x_0)}{2!}(x-x_0)^2+\cdots+\frac{m^{(p)}(x_0)}{p!}(x-x_0)^p.
+	\end{align}
+	This is fitted locally by
+	\begin{align}
+	\sum_{i=1}^n\left\{Y_i-\sum_{j=0}^p\beta_j(X_i-x_0)^j\right\}^2K_h(X_i-x_0)
+	\end{align}
+	where $K$ is a symmetric probability density function with bounded support, although this technical assumption can be relaxed significantly. Now recall that $\hat{m}_{\nu}(x_0)=\nu!\hat{\beta}_{\nu}$ is an estimator for $m^{(\nu)}(x_0)$ and :
+	\begin{align}
+	\mathbf{X}=\left(\begin{array}{cccc}
+	1 & X_1-x_0 & \cdots & (X_1-x_0)^p \\
+	\vdots & \vdots & \vdots & \vdots \\
+	1 & X_n-x_0 & \cdots & (X_n-x_0)^p
+	\end{array}\right),\\
+	\mathbf{y}=\left(\begin{array}{c}
+	Y_1 \\ \vdots \\ Y_n
+	\end{array}\right),\quad
+	\mathbf{\hat{\beta}}=\left(\begin{array}{c}
+	\hat{\beta}_0 \\ \vdots \\ \hat{\beta}_p
+	\end{array}\right)\\
+	\mathbf{W}=diag\{K_h(X_i-x_0)\}_{i=1}^n
+	\end{align}
+	Then the WLS problem in (28) can be written as :
+	\begin{align}
+	\underset{\mathbf{\beta}}{\arg\min}\bf(y-X\beta)^{\top}W(y-X\beta)=\hat{\beta}=
+	(X^{\top}WX)^{\rm-1}\bf X^{\top}Wy.
+	\end{align}
+
+\subsection{Bias and Variance}
+	Notations : $\mathbf{m}=\{m(X_1),\cdots,m(X_n)\}^{\top}$, $\mathbf{\beta}=\{m(x_0),\cdots,m^{(p)}(x_0)/p!\}^{\top}$, $\bf r=m-X\beta$ (the vector of residuals), $\Sigma=diag\{K_h^2(X_i-x_0)\sigma^2(X_i)\}_{i=1}^n$, $\bf e_{\nu}=(\rm0,\cdots,0,1,0,\cdots,0)^{\top}$
+	\begin{align}
+	E(\bf\hat{\beta}|\rm X_1^n)&=\bf(X^{\top}WX)^{\rm-1}\bf X^{\top}Wm\\
+	&=\bf\beta+(X^{\top}WX)^{\rm-1}\bf X^{\top}Wr\\
+	V(\bf\hat{\beta}|\rm X_1^n)&=\bf(X^{\top}WX)^{\rm-1}(\bf X^{\top}\Sigma X)(X^{\top}WX)^{\rm-1}
+	\end{align}
+	Additional notations :
+	\begin{align}
+	\mu_{r,s}&=\int u^rK^s(u)du,\quad\mu_r=\mu_{r,1}\\
+	\bf S_{\it c,s}&=(\it\mu_{i+j+c,s})_{0\leq i,j\leq p}\\
+	\bf v_{\rm a}&=\rm(\mu_{a,1},\cdots,\mu_{a+p,1})^{\top}
+	\end{align}
+	\begin{thm}
+		Assume that $f(x_0)>0$ and $f,m^{(p+1)}$ and $\sigma^2(\cdot)$ are continuous in a neighborhood of  $x_0$. Further, assume that $h\rightarrow0$ and $nh\rightarrow\infty$. Then the asymptotic conditional variance of $\hat{m}_{\nu}(x_0)$ is given by
+		\begin{align}
+		Var\{\hat{m}_{\nu}(x_0)|X_1^n\}=\bf e_{\rm\nu+1}^{\top}\bf S_{\rm0,1}^{\rm-1}\bf S_{\rm0,2}\bf S_{\rm0,1}^{\rm-1}\bf e_{\rm\nu+1}\it\frac{\nu!^2\sigma^2(x_0)}{f(x_0)nh^{2\nu+1}}+o_P\left(\frac{1}{nh^{2\nu+1}}\right).
+		\end{align}
+		The asymptotic conditional bias for $p-\nu$ odd is given by
+		\begin{align}
+		Bias\{\hat{m}_{\nu}(x_0)|X_1^n\}=\bf e_{\rm\nu+1}^{\top}\bf S_{\rm0,1}^{\rm-1}\bf v_{\rm p+1}\it\frac{\nu!}{(p+1)!}m^{(p+1)}(x_0)h^{p+1-\nu}+o_P(h^{p+1-\nu}).
+		\end{align}
+		Further, for $p-\nu$ even the asymptotic conditional bias is
+		\begin{align}
+		Bias\{\hat{m}_{\nu}(x_0)|X_1^n\}=&\bf e_{\rm\nu+1}^{\top}\bf S_{\rm0,1}^{\rm-1}\bf v_{\rm p+2}\it\frac{\nu!}{(p+2)!}\left\{m^{(p+2)}(x_0)+(p+2)m^{(p+1)}(x_0)\frac{f'(x_0)}{f(x_0)}
+		\right\}h^{p+2-\nu}\nonumber
+		\\&+o_P(h^{p+2-\nu})
+		\end{align}
+		provided that $f'$ and $m^{(p+2)}$ are continuous in a neighborhood of $x_0$ and $nh^3\rightarrow\infty$.
+	\end{thm}
+
+\subsection{Equivalent Kernels}
+	Recall the notation
+	\begin{align}
+	S_{n,j}=\sum_{i=1}^nK_h(X_i-x_0)(X_i-x_0)^j
+	\end{align}
+	and put $S_n\equiv\bf X^{\top}WX=\it(S_{n,j+l})_{0\leq j,l\leq p}$. Note first of all that the estimator $\hat{\beta}_{\nu}$ can be written as
+	\begin{align}
+	\hat{\beta}_{\nu}=e_{\nu+1}^{\top}S_n^{-1}\bf X^{\top}Wy=\it\sum_{i=1}^nW_{\nu}^n\left(\frac{X_i-x_0}{h}\right)Y_i
+	\end{align}
+	where $W_{\nu}^n(u)=e_{\nu+1}^{\top}S_n^{-1}<1,uh,\cdots,(uh)^p>^{\top}K(u)/h$. Weights $W_{\nu}^n$ satisfy the following discrete moment conditions :
+	\begin{align}
+	\sum_{i=1}^n(X_i-x_0)^qW_{\nu}^n\left(\frac{X_i-x_0}{h}\right)=\delta_{\nu,q},\quad0\leq\nu,q\leq p.
+	\end{align}
+	We investigate the weight function $W_{\nu}^n$ by noting that
+	\begin{align}
+	S_{n,j}=nh^jf(x_0)\mu_j\{1+o_P(1)\}
+	\end{align}
+	because
+	\begin{align}
+	\nonumber S_{n,j}&=ES_{n,j}+O_p\{Sd(S_{n,j})\}\\
+	\nonumber&=nh^j\int u^jK(u)f(x_0+uh)du+O_p\{\sqrt{nE[(X_1-x_0)^{2j}K_h(X_1-x_0)^2]}\}\\
+	\nonumber&=nh^j\left\{f(x_0)\mu_j+o(1)+O_P\left(\frac{1}{\sqrt{nh}}\right)\right\}\\
+	&=nh^jf(x_0)\mu_j\{1+o_P(1)\}.
+	\end{align}
+	This one immediately obtains that
+	\begin{align}
+	S_n=nf(x_0)H\bf S_{\rm0,1}\it H\{\rm1+o_{\it P}(\rm1)\}
+	\end{align}
+	where $H=\rm diag(1,\it h,\cdots,h^p)$, hence substituting this into the definition of $W_{\nu}^n$ we find that
+	\begin{align}
+	W_{\nu}^n(t)=\frac{1}{nh^{\nu+1}f(x_0)}e_{\nu+1}^{\top}\mathbf{S}_{0,1}^{-1}<1,t,\cdots,t^p>^{\top}K(t)\{1+o_P(1)\}
+	\end{align}
+	and therefore
+	\begin{align}
+	\hat{\beta}_{\nu}=\frac{1}{nh^{\nu+1}f(x_0)}\sum_{i=1}^nK^{*}_{\nu}\left(\frac{X_i-x_0}{h}\right)Y_i\{1+o_P(1)\}
+	\end{align}
+	where
+	\begin{align}
+	K^{*}_{\nu}(t)=e_{\nu+1}^{\top}\mathbf{S}_{0,1}^{-1}<1,t,\cdots,t^p>^{\top}K(t)=\left(\sum_{l=0}^pS^{\nu l}t^l\right)K(t)
+	\end{align}
+	with $\mathbf{S}_{0,1}^{-1}=(S^{jl})_{0\leq j,l\leq p}$. We refer to $K^{*}_{\nu}$ as the equivalent kernel. This kernel satisfies the following moment conditions :
+	\begin{align}
+	\int u^qK^{*}_{\nu}(u)du=\delta_{\nu,q},\quad0\leq\nu,q\leq p,
+	\end{align}
+	which are an asymptotic version of of the discrete moment conditions presented in (46). To emphasize the dependence of $p$, we use $K^{*}_{\nu,p}$ to denote the equivalent kernel function given by (52).\\
+	\begin{figure}
+		\caption{Equivalent Kernels}
+		\centering
+		\includegraphics[width = 12cm]{Fig-3-1.eps}
+	\end{figure}
+	\begin{table}[!htbp] \centering 
+		\caption{\it The equivalent kernel functions $K_{\nu,p}^*$} 
+		\label{} 
+		\begin{tabular}{@{\extracolsep{5pt}} ccc} 
+			\\[-1.8ex]\hline 
+			\hline \\[-1.8ex] 
+			$\nu$ & $p$ & Equivalent kernel functions $K_{\nu,p}^*(t)$ \\ 
+			\hline \\[-1.8ex] 
+			$0$ & $1$ & $K(t)$ \\ 
+			$0$ & $3$ & $(\mu_4-\mu_2^2)^{-1}(\mu_4-\mu_2t^2)K(t)$ \\ 
+			$1$ & $2$ & $\mu_2^{-1}tK(t)$ \\ 
+			$2$ & $3$ & $(\mu_4-\mu_2^2)^{-1}(t^2-\mu_2)K(t)$ \\ 
+			\hline \\[-1.8ex] 
+		\end{tabular}
+	\end{table}
+	The conditional variance and bias of the estimator $\hat{m}_{\nu}(x_0)$ given in Theorem 2.1 can be re-expressed in terms of $K_{\nu}^*$ :
+	\begin{align}
+	Bias\{\hat{m}_{\nu}(x_0)|X_1^n\}&=\left\{\int t^{p+1}K_{\nu}^{*}(t)\right\}\frac{\nu!}{(p+1)!}m^{(p+1)}(x_0) h^{p+1-\nu}+o_P(h^{p+1-\nu})\\
+	Var\{\hat{m}_{\nu}(x_0)|X_1^n\}&=\int K_{\nu}^{*}(t)^{2}dt\frac{\nu!^{2}\sigma^2(x_0)}{f(x_0)nh^{2\nu+1}}+o_P\left(\frac{1}{nh^{2\nu+1}}\right).
+	\end{align}
+
+\subsection{Ideal choice of bandwidth}
+	One can opt for a \textit{constant bandwidth} - also referred to as a \textit{global bandwidth} - or a \textit{variable bandwidth}. For a variable bandwidth the distinction should be made between a \textit{local variable bandwidth} and a \textit{global variable bandwidth}. A local variable bandwidth $h(x_0)$ varies with the location point $x_o$, whereas a global variable bandwidth changes with the data points, and is of the form $h(X_i)$. A variable bandwidth is introduced to allow for different degrees of smoothing, resulting in a possible reduction of the bias at peaked regions and of the variance at flat regions. This enhances the flexibility of the local polynomial fitting so that it can adapt to spatially inhomogeneous curves.
+	
+	The theoretical choice of a global variable bandwidth was discussed in detail in Fan and Gijbels (1992). Here we will focus on the choice of a constant and local (variable) bandwidth. A theoretical optimal local bandwidth for estimating $m^{(\nu)}(x_0)$ is obtained by minimizing the conditional MSE.
+	
+	This ideal choice of a local bandwidth can be approximated by the asymptotically optimal local bandwidth, i.e. the bandwidth which minimizes the asymptotic MSE. The relative error of this approximation can be found in Fan, Gijbels, Hu and Huang (1996). An expression for this asymptotic MSE is provided via (54) and (55), and minimization of it leads to 
+	\begin{align}
+	h_{opt}(x_0)=C_{\nu,p}(K)\left[\frac{\sigma^2(x_0)}{m^{(p+1)}(x_0)^2f(x_0)}\right]^{\frac{1}{2p+3}}n^{-\frac{1}{2p+3}}
+	\end{align}where
+	\begin{align}
+	C_{\nu,p}(K)=\left[\frac{(p+1)!^2(2\nu+1)\int K_{\nu}^*(t)^2dt}{2(p+1-\nu)\{\int t^{p+1}K_{\nu}^*(t)dt\}^2}\right]^{\frac{1}{2p+3}}.
+	\end{align}
+	A commonly used, simple measure of global loss is the weighted MISE. Minimization of the conditional weighted MISE$=\int\textrm{MSE}(x|X_1^n)w(x)dx$ obtains
+	\begin{align}
+	h_{opt}=C_{\nu,p}(K)\left[\frac{\int\frac{\sigma^2(x)w(x)}{f(x)}dx}{\int m^{(p+1)}(x)^2w(x)dx}\right]^{\frac{1}{2p+3}}n^{-\frac{1}{2p+3}}.
+	\end{align}
+
+\subsection{Nature of Automatic boundary carpentary}
+	Consider the boundary points $x=a+ch$ and $x=b-ch$, $c\geq0$ for some $h$. To simpliy, We take $a=0$. 
+	Note that :
+	\begin{align}
+	S_{n,j}=nh^{j}f(0+)\mu_{j}|_{-c}^{\infty}\{1+o_P(1)\},\quad\mu_{j}|\rm_{lower}^{upper}=\int_{lower}^{upper}\it u^jK(u)du
+	\end{align}
+	which leads to the following equivalent kernel at the boundary
+	\begin{align}
+	K^{*}_{\nu,c}(t)=e_{\nu+1}^{\top}\mathbf{S}_{c}^{-1}<1,t,\cdots,t^p>^{\top}K(t),\quad\mathbf{S}_{c}=(\mu_{j+l}|_{-c}^{\infty})_{0\leq j,l\leq p}.
+	\end{align}
+	\begin{figure}
+		\caption{Equivalent Kernels at boundary points}
+		\centering
+		\includegraphics[width = 14cm]{Fig-3-2.eps}	
+		\\ $c=0.3$ (solid line), $c=0.7$ (dotted line) and $c\geq1$ (dashed line)
+	\end{figure}
+	\begin{thm}
+		Assume that $f(0+)>0$ and that $f$, $m^{(p+1)}$ and $\sigma^2$ are right continuous at the point $0$. Then, the conditional MSE of the estimator $\hat{m}_{\nu}(x)$ at the left boundary point $x=ch$ is given by
+		\begin{align}
+		\left[\left\{\int_{-c}^{\infty}t^{p+1}K^*_{\nu,c}(t)dt\right\}^2\left\{\nu!\frac{m^{(p+1)}(0+)}{(p+1)!}\right\}^2h^{2(p+1-\nu)}+\int_{-c}^{\infty}K^*_{\nu,c}(t)^2dt\frac{\nu!^2\sigma^2(0+)}{f(0+)nh^{2\nu+1}}\right]\{1+o_P(1)\}.
+		\end{align}
+	\end{thm}
+	It is easy to see that, when $p - \nu$ is odd, the conditional MSE is a continuous function in $c$, which implies that the risk changes continuously rom a boundary point to an interior point. This is a theoretical justification of why the local polynomial fit with $p - \nu$ odd does not require boundary modifications. However, when $p - \nu$ is even the bias at the boundary is of a larger order. Compare Theoren 2.1 with Theorem 2.2. Thus, a boundary modification is needed.
+	
+	Analogously, one can obtain expressions for the conditional MSE of the estimator at right boundary points. The integrations in (61) are now from $-\infty$ to $c$ (including those in the definition of $K^*_{\nu,c}$) and the functions $m^{(p+1)}$, $\sigma^2$ and $f$ are now evaluated at 1.
+	
+	To get a deeper insight into the boundary property of the local polynomial estimator, we focus now on the special case of the local linear regression estimator $(p=1)$ used for estimating the regression function $(\nu=0)$. In this particular case it is easy to see from (60) that the equivalent kernel $K^*_{0,c}(t)$ at a left boundary point $x=ch$ equals
+	\begin{align}
+	K^*_{0,c}(t)=\frac{\mu_{2}|_{-c}^{\infty}-t\mu_{1}|_{-c}^{\infty}}{\mu_{0}|_{-c}^{\infty}\mu_{2}|_{-c}^{\infty}-(\mu_{1}|_{-c}^{\infty})^2}K(t)
+	\end{align}
+	This immediately leads to an expression for the conditional MSE of the local linear regression estimator at left boundary points. This result was established by Fan and Gijbels (1992) in the more general setting of a global variable bandwidth, and under general conditions on $K$ (not necessarily requiring kernels with bounded support).
+	\begin{thm}
+		Assume that $f$, $m''$ and $\sigma^2$ are right continuous at the point $0$. Suppose that $\lim\sup_{u\rightarrow-\infty}|K(u)u^5|<\infty$. Then, the conditional MSE of the estimator at the boundary point $x=ch$ is given by 
+		\begin{align}
+		\frac{1}{4}\left\{m''(0+)\frac{(\mu_{2}|_{-c}^{\infty})^2-\mu_{1}|_{-c}^{\infty}\mu_{3}|_{-c}^{\infty}}{\mu_{0}|_{-c}^{\infty}\mu_{2}|_{-c}^{\infty}-(\mu_{1}|_{-c}^{\infty})^2}\right\}^2h^4&+\frac{\int_{-c}^{\infty}(\mu_{2}|_{-c}^{\infty}-u\mu_{1}|_{-c}^{\infty})^2K(u)^2du}{\{\mu_{0}|_{-c}^{\infty}\mu_{2}|_{-c}^{\infty}-(\mu_{1}|_{-c}^{\infty})^2\}^2}\frac{\sigma^2(0+)}{f(0+)nh}\\
+		\nonumber&+o_P\left(h^4+\frac{1}{nh}\right)
+		\end{align}
+	\end{thm}
+	It is demonstrated clearly now that the rate of the estimator is not influenced by the position of the point under consideration. Further, we can identify some constant factors $b(c)$ and $v(c)$ for bias and variance by re-expressing (63) :
+	\begin{align}
+	\frac{1}{4}m''(0+)^2b(c)^2h^4+v(c)\frac{\sigma^2(0+)}{f(0+)nh}+o_P\left(h^4+\frac{1}{nh}\right).
+	\end{align}
+	\begin{figure}
+	\caption{Behavior of the constant factors}
+	\centering
+	\includegraphics[width = 14cm]{Fig-3-3.eps}	
+	\end{figure}
+	
+	All figures presented in Figure 3 show the same behavior such that with $[-s_0,s_0]$ being the support of $K$,
+	\begin{align}
+	\underset{c\rightarrow s_0}{\lim}b(c)^2=\mu_2^2\quad\textrm{and}\quad\underset{c\rightarrow s_0}{\lim}v(c)=\nu_0.
+	\end{align}
+	and these limits are exactly the constant factors appearing in re- spectively the squared bias and variance for an interior point. Furthermore, it is clear from the pictures that $b(c)$ is smaller than $\mu_2^2$ and that $v(c)$ is larger than $\nu_0$, for all values of $c$. 
+	
+	This implies that the squared bias of the local linear regression estimator is smaller at a boundary point than at an interior point, at least if the value of $m''$ is the same and the same amount of smoothing is used This is due to the fact that one uses a linear approximation on a smaller interval around the boundary point.
+	
+	The variance however tends to be larger, because on a smaller interval fewer observations contribute in computing the estimator From the above discussion we conclude that the local polynomial estimators do not suffer from boundary effects and this is an important gain in comparison with many other methods.
+
+\subsection{Universal optimal weighting scheme}
+	When using the optimal bandwidths (56) and (58) both the aysmptotically MSE and MISE depend on the $K$ through
+	\begin{align}
+	T_{\nu,p}(K)=\left|\int t^{p+1}K^*_{\nu}(t)dt\right|^{2\nu+1}\left\{\int K^*_{\nu}(t)dt\right\}^{p+1-\nu}.
+	\end{align}
+	We assume throughout this section that $p-\nu$ is odd.
+	\begin{thm}
+		The Epanechnikov weight function $K(u)=\frac{3}{4}(1-u^2)_+$ is the optimal kernel in the sense that it minimizes $T_{\nu,p}(K)$ over all 1. nonnegative, 2. symmetric and 3. Lipschitz continuous functions. The minimum variance kernel minimizing $\int K^*_{\nu}(u)^2du$ is given by the uniform density $\frac{1}{2}I_{-1,1}(u)$.
+	\end{thm}
+	Denote by $K_{\nu,p}^{opt}(u)$ the equivalent kernel induced by the optimal Epanechnikov kernel. It has been shown that this kernel equals
+	\begin{align}
+	K_{\nu,p}^{opt}(u)=\sum_{j=0}^{p+1}\lambda_jz^j
+	\end{align}
+	where
+	\begin{align}
+	\lambda_j=
+	\begin{cases}
+	~0&\text{if }j+p+1\text{ odd}\\
+	~\frac{(-1)^{\frac{j+\nu}{2}}C_p(p+1-\nu)(p+1+j)!}{j!(j+\nu+1)2^{2p+3}\left(\frac{p+1-j}{2}\right)!\left(\frac{p+1+j}{2}\right)!}&\text{if }j+p+1\text{ even}
+	\end{cases}
+	\end{align}
+	where $C_p=\frac{(p+\nu+2)!}{\left(\frac{p+1+\nu}{2}\right)!\left(\frac{p+1-\nu}{2}\right)!}$. Moreover, we habe the following explicit formulae for its $(p+1)^{th}$ moment and $L_2$-norm :
+	\begin{align}
+	\left|\int t^{p+1}K_{\nu,p}^{opt}(t)dt\right|&=\frac{C_p\{(p+1)!\}^2}{(2p+3)!}\\
+	\int K_{\nu,p}^{opt}(t)^2dt&=\frac{C_p^2(p+1-\nu)^2}{(2\nu+1)(2p+3)(p+\nu+2)2^{2p+2}}.
+	\end{align}
+	It is known that the choice of the kernel function $K$ is not very important for the performance of the resulting estimators, both theoretically and empirically. However, since the Epanechnikov kernel is optimal in minimizing MSE and MISE at an interior point, using this kernel function is recommended. The structure of this kernel also enables us to implement fast computing algorithms, which is another reason behind recommendation. 
+
+\subsection{Increases of variability}
+	We now focus on a comparison of gains and losses of fittings of different orders. According to Theorem 2.1, higher order polynomial fittings result in a smaller order of the bias. However, as (55) implies, the dependency of variance on $p$ should be investigated. Set $\nu=0$ for simplicity.
+	
+	Then the asymptotic variance of the estimator for the regression function is of the form
+	\begin{align}
+	V_p\frac{\sigma^2(x_0)}{f(x_0)nh}\{1+o_P(1)\}
+	\end{align}
+	where $V_p$ is the $(1,1)^{th}$ element of the matrix $\bf S_{\rm0,1}^{\rm-1}\bf S_{\rm0,2}\bf S_{\rm0,1}^{\rm-1}$. For $p=0,1,2,3$ the constant term $V_p$ can be explicitly written as
+	\begin{align}
+	V_0=V_1=\nu_0,\quad V_2=V_3=\frac{\mu_4^2\nu_0-2\mu_2\mu_4\nu_2+\mu_2^2\nu_4}{(\mu_4-\mu_2^2)^2}.
+	\end{align}
+	For a Gaussian kernel, we have that
+	\begin{align}
+	\mu_{2j}=(2j-1)(2j-3)\cdots3\cdot1\quad\text{and}\quad\nu_{2j}=2^{-j-1}\frac{\mu_{2j}}{\sqrt{\pi}}
+	\end{align}
+	and for the symmetric beta kernel defined in (5) we find
+	\begin{align}
+	\mu_{2j}=\frac{Beta(j+\frac{1}{2},\gamma+1)}{Beta(\frac{1}{2},\gamma+1)}\quad\text{and}\quad\nu_{2j}=\frac{Beta(j+\frac{1}{2},2\gamma+1)}{\{Beta(\frac{1}{2},\gamma+1)\}^2}.
+	\end{align}
+	Recall that the choices $\gamma=0,1,2$ and $3$ lead respectively to the uniform, the Epanechnikov, the biweight and the triweight kernel function.
+	\begin{figure}
+		\caption{Increase of the variability}
+		\centering
+		\includegraphics[width = 10cm]{Fig-3-4.eps}	
+	\end{figure}
+
+\subsection{Variable order approximation}
+	We now describe the order selection procedure for estimating $m^{(\nu)}(x_0)$. Denote by $\hat{MSE}_{\nu,p}(x_0;h)$ any estimator of the MSE when fitting a polynomial of degree $p$. The estimated curve is usually evaluated at grid points of the form
+	\begin{align}
+	x_j=x_L+j\triangle,\quad j=0,\cdots,n_{grid}
+	\end{align}
+	with $x_L$ the first grid point.
+	
+	Suppose that we are interested only in polynomial approximations up to order $R$. For a given bandwidth $h$ the algorithm of adaptive order approximation consists of the following steps :
+	
+	\textbf{Step 1}. For each order $p\,(\nu < p \leq R)$ and for each grid point obtain $MSE_{\nu,p}(x_j;h)$; 
+	
+	\textbf{Step 2}. For each order $p$, and for each grid point calculate the smoothed estimated MSE by taking the weighted local average of the estimated MSE in the neighboring $2[h/\triangle]+1$ grid points; 
+	
+	\textbf{Step 3}. For each grid point $x_j$, choose the order $p_j$, which has the smallest smoothed estimated MSE, and use a $p_j$ order polynoal approximation to estimate $m^{(\nu)}(x_j)$. \\
+	
+	We first of all mention that smoothing the estimated MSE in Step 2 is obtained by averaging the estimated MSE in a local neighborhood of width $h$. This step is not crucial, and can simply be replaced by taking the estimated MSE itself. 
+	
+	In principle even order fits do not have to be included, but we did not exclude them in the above algorithm since they can possibly perform well at finite sample sizes. A detailed description of the variable order selection procedure based on the particular estimator for the MSE can be found in Fan and Gijbels (1995b). 
+	
+	We here illustrate briefly the benefits of the proposed variable order selection rule. The estimator for the MSE is taken to be the one proposed in next chapter. Consider the model 
+	\begin{align}
+	Y=X +2\exp(-16X^2)+ N(0,0.5^2)
+	\end{align}
+	where $X\sim$ Uniform(-2,2). Of interest is to estimate the regression curve $m(x)$. We simulated with the Epanechnikov kernel. See Figure 5.
+	\begin{figure}
+		\caption{MADE ratio with 400 simulations}
+		\centering
+		\includegraphics[width = 14cm]{Fig-3-5(400).eps}
+		\\local constant(solid line), linear(dashed line), quadratic(dotted) and cubic(dotted dashed line) fits
+	\end{figure}
+	This highlights a nice feature of the order selection procedure : it is 'robust' for the choice of the bandwidth. In order to compare the various fixed order and the variable order approximations, we calculate for each fitted order the Mean Absolute Deviation Error (MADE) in each grid point based on 400 simulations. For each fixed order, we plot the ratio of the MADE for that fixed order to the MADE for the adaptive order. All pictures reveal that the adaptive order has small risk at all locations. This means that the variable order selection procedure correctly selected order 1 at both ends and order 2 or 3 in the middle, which is what we intuitively expected. Moreover, the procedure selects the right order, even at locations such as $-0.7 \leq x\leq-0.3$ where even humans are not sure which order to use. 
+%\section{Appendix : R Implementation code}
+%\lstset{frame=single, basicstyle=\footnotesize}
+%\lstinputlisting{NPFEHW1.R}
+\end{document}
