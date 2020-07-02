@@ -1,3 +1,0 @@
-[1] "VIF"
-green_in_regulation         putting_avg    driving_accuracy             birdies 
-           2.415519            2.155980            1.122517            1.333604 
