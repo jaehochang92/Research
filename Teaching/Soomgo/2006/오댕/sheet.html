@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Formulae for Bayesian A/B Testing – Evan Miller</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Jaeho Chang">
+    <meta property="og:title" content="Bayesian A/B Testing Walkthrough">
+    <meta property="og:description" content="A collection of closed-form equations for A/B testing binary">
+    <meta property="og:url" content="https://jaehochang/BayesAB/lesson.html">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {
+            equationNumbers: {
+                autoNumber: "AMS"
+            }
+        },
+        CommonHTML: {
+            linebreaks: {
+                automatic: true
+            }
+        },
+        "HTML-CSS": {
+            linebreaks: {
+                automatic: true
+            }
+        },
+        SVG: {
+            linebreaks: {
+                automatic: true
+            }
+        }
+    });
+
+    </script>
+</head>
+<body>
+<div id="content">
+    <div class="article">
+        <h1>Formulae for Bayesian A/B Testing: Walkthrough</h1>
+        <p>
+            Instructor: Jaeho Chang
+        </p>
+        <p>
+            <a href="mailto: cjhsfl@gmail.com">cjhsfl@gmail.com</a>
+        </p>
+        <p>
+            Client: 오댕
+        </p>
+        <p>
+            <em>June 12, 2020</em>
+        </p>
+        <p>
+            <a href="https://www.evanmiller.org/bayesian-ab-testing.html">Original material</a>
+        </p>
+
+        <h3>Table of Contents</h3>
+        <ol>
+            <li>
+                <a href="#binary_ab">A/B testing: binary outcomes</a>
+                <ol>
+                    <li>
+                        <a href="#binary_ab_derivation">Derivation</a>
+                    <li>
+                        <a href="#binary_ab_equivalent">Equivalent Formulas</a>
+                </ol>
+            <li>
+                <a href="#binary_abc">A/B/C testing: binary outcomes</a>
+                <ol>
+                    <li>
+                        <a href="#binary_abc_derivation">Derivation</a>
+                </ol>
+        </ol>
+
+        <hr>
+
+        <a name="binary_ab"></a>
+        <h2>A/B testing: binary outcomes</h2>
+
+        <p>For a binary-outcome test (e.g. a test of conversion rates), the probability that B will beat A in the long
+            run is given by:</p>
+
+        \[
+        {\rm Pr}(p_B &gt; p_A) = \sum_{i=0}^{\alpha_B-1}{\frac{B(\alpha_A+i, \beta_B +
+        \beta_A)}{(\beta_B+i)B(1+i,\beta_B)B(\alpha_A,\beta_A)}}
+        \]
+
+        <p>Where:
+        <p>
+        <ul>
+            <li>\(\alpha_A\) = 1 + \(S_A\)</li>
+            <li>\(\beta_A\) = 1 + \(F_A\)</li>
+            <li>\(\alpha_B\) = 1 + \(S_B\)</li>
+            <li>\(\beta_B\) = 1 + \(F_B\)</li>
+            <li>
+                \(B\) is the beta function. For arbitrary \(\alpha\) >0 and \(\beta\) > 0, beta function is defines as:
+                \[
+                B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}.
+                \]
+            </li>
+        </ul>
+
+        <a name="binary_ab_derivation"></a>
+        <h3>Derivation</h3>
+
+        <p>Suppose we have two independent experimental branches (A and B) and have a Bayesian belief for each one:</p>
+
+        \[
+        \begin{array}{lr}
+        p_A \sim {\rm Beta}(\alpha_A, \beta_A) \\
+        p_B \sim {\rm Beta}(\alpha_B, \beta_B)
+        \end{array}
+        \]
+
+        <p>Using the pdf of the beta distribution, we can get the total probability that \(p_B\) is greater than \(p_A\)
+            by integrating the joint distribution over all values for which \(p_B &gt; p_A\):</p>
+
+        \[
+        \begin{equation}
+        {\rm Pr}(p_B &gt; p_A) = \int_0^1 {\rm Pr}(p_B>p_A|p_A){\rm Pr}(p_A)dp_A
+        = \int_0^1 \int_{p_A}^1 {\rm Pr}(p_B|p_A)dp_B{\rm Pr}(p_A)dp_A\\
+        = \int_0^1 \int_{p_A}^1 \frac{p_A^{\alpha_A-1}(1-p_A)^{\beta_A-1}}{B(\alpha_A, \beta_A)}
+        \frac{{p_B}^{\alpha_B-1}(1-p_B)^{\beta_B-1}}{B(\alpha_B, \beta_B)} dp_B dp_A
+        \end{equation}
+        \]
+
+        <p>
+            Define \({\displaystyle \mathrm {B} (x;\,a,b)=\int _{0}^{x}t^{a-1}\,(1-t)^{b-1}\,dt}\) and
+            \(I_x(a, b) = \frac{{\rm B}(x;\,a,b)}{{\rm B}(a,b)}\).
+            \(I_x(a, b)\) is the <a href="https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function">regularized
+            incomplete beta function</a> and note that \(I_x(1,b) = \frac{{\rm B}(x;\,1,b)}{{\rm B}(1,b)}
+            =b\cdot\int_0^x(1-t)^{b-1}dt=b\left\{\frac{1}{b}-\frac{(1-x)^b}{b}\right\}
+            =1 - (1 - x)^b\).
+        </p>
+
+        <p>With these facts, evaluate the inner integral:</p>
+
+        \[
+        \begin{equation}
+        \label{binary_ab_pr_eval_inner_solv}
+        \int_{p_A}^1\frac{p_B^{\alpha_B-1}(1-p_B)^{\beta_B-1}}{B(\alpha_B,\beta_B)}dp_B
+        = 1-\int_0^{p_A}\frac{p_B^{\alpha_B-1}(1-p_B)^{\beta_B-1}}{B(\alpha_B,\beta_B)}dp_B
+        = 1-\frac{B(p_A;\alpha_B,\beta_B)}{B(\alpha_B,\beta_B)}
+        = 1-I_{p_A}(\alpha_B,\beta_B).
+        \end{equation}
+        \]
+
+        <p>So the equation becomes:</p>
+
+        \[
+        \begin{equation}
+        \label{binary_ab_pr_eval_inner}
+        {\rm Pr}(p_B &gt; p_A) = 1 - \int_0^1
+        \frac{p_A^{\alpha_A-1}(1-p_A)^{\beta_A-1}}{B(\alpha_A,\beta_A)}I_{p_A}(\alpha_B, \beta_B)dp_A.
+        \end{equation}
+        \]
+
+        <p>Now, there is a recursive relationship</p>
+
+        \[
+        \begin{equation}
+        I_x(a, b) = I_x(a-1, b) - \frac{x^{a-1}(1-x)^b}{(a-1)B(a-1,b)}
+        \end{equation}
+        \]
+
+        <p>because if we denote \(f(a,b,x) = I_x(a, b) - I_x(a-1, b) + \dfrac{x^{a-1}
+            \left( 1-x \right)^b}{(a-1) \, B\left( a-1, b \right)}\), \(f(a,b,0)=0\) and</p>
+
+        \[
+        \begin{equation}
+        f'(a,b,x) = I_x'(a, b)-I_x'(a-1, b)+\frac{x^{a-2}(1-x)^{b-1}\{(a-1)(1-x)-bx\}}{(a-1)B(a-1,b)}\\
+        = \frac{x^{a-1}(1-x)^{b-1}}{B(a,b)} + \frac{x^{a-2}(1-x)^{b-1}}{B(a-1,b)}+\frac{x^{a-2}(1-x)^{b-1}\{(a-1)(1-x)-bx\}}{(a-1)B(a-1,b)}
+        \end{equation}
+        \]
+
+        <p>so \(f'(a,b,0)=0\) and \(f(a,b,x)=0\).</p>
+
+        <p>Using this relationship and the fact that \(\alpha\) and \(\beta\) are integers, we can express \(I_x\)
+            as:</p>
+
+        \[
+        \begin{equation}
+        I_x(a, b) = I_x(a-1, b) - \frac{x^{a-1}(1-x)^b}{(a-1)B(a-1,b)} \\
+        = I_x(a-2, b) - \frac{x^{a-2}(1-x)^b}{(a-2)B(a-2,b)} - \frac{x^{a-1}(1-x)^b}{(a-1)B(a-1,b)}
+        = \cdots
+        = 1 - (1 - x)^b - \sum_{j=1}^{a-1}\frac{x^{a-j}(1-x)^b}{(a-j)B(a-j,b)}
+        \end{equation}
+        \]
+
+        <p>Or equivalently:</p>
+
+        \[
+        \begin{equation}
+        \label{ibeta_sum}
+        I_x(a, b) = 1 - \sum_{i=0}^{a-1} \frac{x^{i}(1 - x)^b}{(b+i)B(1+i,b)}
+        \end{equation}
+        \]
+
+        <p>The probability integral \(\eqref{binary_ab_pr_eval_inner}\) can therefore be written:</p>
+
+
+        \[
+        \begin{array}{ll}
+        {\rm Pr}(p_B &gt; p_A) &amp;=&amp; 1 - \int_0^1 \frac{p_A^{\alpha_A-1}(1-p_A)^{\beta_A-1}}{B(\alpha_A,\beta_A)}
+        \left(1 - \sum_{i=0}^{\alpha_B-1}{\frac{p_A^i(1-p_A)^{\beta_B}}{(\beta_B+i)B(1+i, \beta_B)}}\right)dp_A \\
+        &amp;=&amp; 1 - 1 + \int_0^1 \frac{p_A^{\alpha_A-1}(1-p_A)^{\beta_A-1}}{B(\alpha_A,\beta_A)}
+        \sum_{i=0}^{\alpha_B-1}{\frac{p_A^i(1-p_A)^{\beta_B}}{(\beta_B+i)B(1+i, \beta_B)}}dp_A \\
+        &amp;=&amp; \int_0^1
+        \sum_{i=0}^{\alpha_B-1}{\frac{p_A^{\alpha_A-1+i}(1-p_A)^{\beta_A+\beta_B-1}}{(\beta_B+i)B(\alpha_A,
+        \beta_A)B(1+i, \beta_B)}}dp_A \\
+        &amp;=&amp;
+        \sum_{i=0}^{\alpha_B-1}\int_0^1{\frac{p_A^{\alpha_A-1+i}(1-p_A)^{\beta_A+\beta_B-1}}{(\beta_B+i)B(\alpha_A,
+        \beta_A)B(1+i, \beta_B)}}dp_A \\
+        &amp;=&amp; \sum_{i=0}^{\alpha_B-1}\frac{B(\alpha_A+i,\beta_A+\beta_B)}{(\beta_B+i)B(\alpha_A, \beta_A)B(1+i,
+        \beta_B)} \int_0^1{\frac{p_A^{\alpha_A-1+i}(1-p_A)^{\beta_A+\beta_B-1}}{B(\alpha_A+i,\beta_A+\beta_B)}}dp_A
+        \end{array}
+        \]
+
+        <p>Finally:</p>
+
+        \[
+        \begin{equation}
+        \label{binary_ab_pr_alpha_b}
+        {\rm Pr}(p_B &gt; p_A) = \sum_{i=0}^{\alpha_B-1}\frac{B(\alpha_A+i,\beta_A+\beta_B)}{(\beta_B+i)
+        B(1+i, \beta_B)
+        B(\alpha_A, \beta_A)
+        }
+        \end{equation}
+        \]
+
+        <a name="binary_ab_equivalent"></a>
+        <h3>Equivalent Formulas</h3>
+
+        <p>It’s possible to derive similar formulas that sum over the other three parameters:</p>
+
+
+        \[
+        \begin{align}
+        {\rm Pr}(p_B &gt; p_A) &amp;= 1 - \sum_{i=0}^{\alpha_A-1}{\frac{B(\alpha_B+i, \beta_B +
+        \beta_A)}{(\beta_A+i)B(1+i,\beta_A)B(\alpha_B,\beta_B)}} \\
+        {\rm Pr}(p_B &gt; p_A) &amp;= \sum_{i=0}^{\beta_A-1}{\frac{B(\beta_B+i, \alpha_A +
+        \alpha_B)}{(\alpha_A+i)B(1+i,\alpha_A)B(\alpha_B,\beta_B)}} \\
+        {\rm Pr}(p_B &gt; p_A) &amp;= 1 - \sum_{i=0}^{\beta_B-1}{\frac{B(\beta_A+i, \alpha_A +
+        \alpha_B)}{(\alpha_B+i)B(1+i,\alpha_B)B(\alpha_A,\beta_A)}}
+        \end{align}
+        \]
+
+        <p>The above formulas can be found with symmetry arguments.</p>
+
+        <a name="binary_abc"></a>
+        <h2>A/B/C testing: binary outcomes</h2>
+
+        <p>It is possible to extend the binary-outcome formula to three test groups, call them A, B, and C. The
+            probability that C will beat both A and B in the long run is:</p>
+
+
+        \[
+        {\rm Pr}(p_C &gt; \max\{p_A, p_B\}) = \\ 1 - {\rm Pr}(p_A &gt; p_C) - {\rm Pr}(p_B &gt; p_C)
+        + \sum_{i=0}^{\alpha_A-1} \sum_{j=0}^{\alpha_B-1}{\frac{B(i+j+\alpha_C, \beta_A + \beta_B +
+        \beta_C)}{(\beta_A+i)B(1+i,\beta_A)(\beta_B+j)B(1+j,\beta_B)B(\alpha_C, \beta_C)}}
+        \]
+
+        <p>Where:
+        <p>
+        <ul>
+            <li>\(\alpha_X\) is one plus the number of successes for \(X \in \{A, B, C\}\)</li>
+            <li>\(\beta_X\) is one plus the number of failures for \(X \in \{A, B, C\}\)</li>
+            <li>\({\rm Pr}(p_X &gt; p_C)\) is the formula for the two-group case, given by
+                \(\eqref{binary_ab_pr_alpha_b}\)
+            </li>
+        </ul>
+
+        <p>
+            Note that this formula can be computed in \(O(\alpha_A \alpha_B)\) time (see the
+            <a href="#binary_abc_implementation">implementation</a>
+            section below).
+        </p>
+
+        <a name="binary_abc_derivation"></a>
+        <h3>Derivation</h3>
+
+        <p>Start with a Bayesian belief for each of three experimental branches (A, B, and C):</p>
+
+
+        \[
+        \begin{array}{lr}
+        p_A \sim {\rm Beta}(\alpha_A, \beta_A) \\
+        p_B \sim {\rm Beta}(\alpha_B, \beta_B) \\
+        p_C \sim {\rm Beta}(\alpha_C, \beta_C) \\
+        \end{array}
+        \]
+
+        <p>Calling the pdf of the beta distribution \(f(p|\alpha, \beta) = f(p)\), we can get the total probability that
+            \(p_C\) is greater than both \(p_A\) and \(p_B\) by integrating the joint distribution over all values for
+            which \(p_C &gt; p_A\) and \(p_C &gt; p_B\):</p>
+
+        \[
+        {\rm Pr}(\max{\{p_A, p_B\}}< p_C)
+        = \int_0^1 {\rm Pr}(p_C){\rm Pr}(p_C|\max\{p_A, p_B\} < p_C)dp_C
+        = \int_0^1 {\rm Pr}(p_C){\rm Pr}(p_A < p_C){\rm Pr}(p_B < p_C)dp_C \\
+        = \int_0^1 \int_0^{p_C} \int_0^{p_C} f(p_A) f(p_B) f(p_C) dp_A dp_B dp_C
+        \]
+
+        <p>Evaluating the inner two integrals, the equation becomes:</p>
+
+
+        \[
+        \begin{equation}
+        \label{binary_abc_pr_eval_inner}
+        {\rm Pr}(p_C &gt; \max{\{p_A, p_B\}}) = \int_0^1 I_{p_C}(\alpha_A, \beta_A) I_{p_C}(\alpha_B, \beta_B) f(p_C)
+        dp_C
+        \end{equation}
+        \]
+
+        <p>Using the identity for \(I_X\) \(\eqref{ibeta_sum}\), we have:</p>
+
+
+        \[
+        {\rm Pr}(p_C &gt; \max{\{p_A, p_B\}}) = \int_0^1
+        \left(1-\sum_{i=0}^{\alpha_A-1}\frac{p_C^i (1-p_C)^{\beta_A}}{(\beta_A+i)B(1+i,\beta_A)}\right)
+        \left(1-\sum_{i=0}^{\alpha_B-1}\frac{p_C^i (1-p_C)^{\beta_B}}{(\beta_B+i)B(1+i,\beta_B)}\right)
+        f(p_C) dp_C \\
+        \]
+
+        <p>Multiplying out the parenthetical terms and integrating them separately:</p>
+
+
+        \[
+        {\rm Pr}(p_C &gt; \max{\{p_A, p_B\}}) = 1
+        - \int_0^1 \sum_{i=0}^{\alpha_A-1}\frac{p_C^i (1-p_C)^{\beta_A}}{(\beta_A+i)B(1+i,\beta_A)} f(p_C) dp_C
+        - \int_0^1 \sum_{i=0}^{\alpha_B-1}\frac{p_C^i (1-p_C)^{\beta_B}}{(\beta_B+i)B(1+i,\beta_B)} f(p_C) dp_C \\
+        + \int_0^1 \sum_{i=0}^{\alpha_A-1}\frac{p_C^i (1-p_C)^{\beta_A}}{(\beta_A+i)B(1+i,\beta_A)}
+        \sum_{i=0}^{\alpha_B-1}\frac{p_C^i (1-p_C)^{\beta_B}}{(\beta_B+i)B(1+i,\beta_B)} f(p_C) dp_C
+        \]
+
+        <p>From the previous derivation, we can rewrite the first two integrals as \({\rm Pr}(p_A &gt; p_C)\) and \({\rm
+            Pr}(p_B &gt; p_C)\), and consolidate the terms inside the third integral:</p>
+
+
+        \[
+        \begin{array}{ll}
+        {\rm Pr}(p_C &gt; \max{\{p_A, p_B\}}) &=& 1 - {\rm Pr}(p_A &gt; p_C) - {\rm Pr}(p_B &gt; p_C) \\
+        && + \int_0^1 \sum_{i=0}^{\alpha_A-1} \sum_{j=0}^{\alpha_B-1}
+        \frac{p_C^{i+j}(1-p_C)^{\beta_A+\beta_B}}{(\beta_A+i)(\beta_B+j)B(1+i,\beta_A)B(1+j,\beta_B)}
+        \frac{p_C^{\alpha_C-1}(1-p_C)^{\beta_C-1}}{B(\alpha_C, \beta_C)} dp_C \\ \\
+        &=& 1 - {\rm Pr}(p_A &gt; p_C) - {\rm Pr}(p_B &gt; p_C) \\
+        && + \int_0^1 \sum_{i=0}^{\alpha_A-1} \sum_{j=0}^{\alpha_B-1}
+        \frac{p_C^{i+j+\alpha_C-1}(1-p_C)^{\beta_A+\beta_B+\beta_C-1}}{(\beta_A+i)(\beta_B+j)B(1+i,\beta_A)B(1+j,\beta_B)B(\alpha_C,
+        \beta_C)} dp_C
+        \end{array}
+        \]
+
+        <p>Finally, evaluating the integral we have:</p>
+
+        \[
+        \begin{array}{ll}
+        {\rm Pr}(p_C &gt; \max\{p_A, p_B\}) &=& 1 - {\rm Pr}(p_A &gt; p_C) - {\rm Pr}(p_B &gt; p_C) \\
+        && + \sum_{i=0}^{\alpha_A-1} \sum_{j=0}^{\alpha_B-1} \frac{B(i+j+\alpha_C,
+        \beta_A+\beta_B+\beta_C)}{(\beta_A+i)(\beta_B+j)B(1+i,\beta_A)B(1+j,\beta_B)B(\alpha_C, \beta_C)}
+        \end{array}
+        \]
+</body>
+</html>

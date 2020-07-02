@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>기초통계학</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="장재호">
+    <meta property="og:title" content="An Introduction to Statistics">
+    <meta property="og:description" content="Basic concepts and theories of Statistics, and its applications will be addressed.">
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {
+            equationNumbers: {
+                autoNumber: "AMS"
+            }
+        },
+        CommonHTML: {
+            linebreaks: {
+                automatic: true
+            }
+        },
+        "HTML-CSS": {
+            linebreaks: {
+                automatic: true
+            }
+        },
+        SVG: {
+            linebreaks: {
+                automatic: true
+            }
+        }
+    })
+    </script>
+    <style>
+      @font-face {
+      font-family: IB;
+      src: url('/Users/jangjaeho/Library/Fonts/IropkeBatangM.ttf')
+      }
+      p, ul, td, th {
+         font-family: IB;
+         font-size: 12px;
+      }
+      h1, h2, h3, h4, span {
+         font-family: IB;
+      }
+    </style>
+</head>
+
+<body>
+<div class="container_12" id="container">
+    <div class="grid_12">
+        <h1>기초통계학</h1>
+        <h4>
+            Instructor: 장재호 (<a href="mailto: jaehochang@konkuk.ac.kr">jaehochang@konkuk.ac.kr</a>)
+        </h4>
+
+        <h2 style="color:blue">1. 통계학의 분류</h2>
+
+        <hr>
+        <hr>
+
+        <h3 style="color:blue">1.1. 기술통계(Descriptive Statistics)</h3>
+
+        <p>기술통계는 말 그대로 자료의 특성(characteristic)을 기술하는 성격을 지닌 통계량(statistics)를 말한다.</p>
+        <ul>
+            <li>빈도(Frequency)</li>
+            <li>평균(Mean)</li>
+            <li>중위수(Median)</li>
+            <li>표준편차(Standard Deviation)</li>
+            <li>분산(Variance)</li>
+            <li>왜도(Skewness)</li>
+            <li>첨도(Kurtosis)</li>
+        </ul>
+
+
+
+
+
+        <h3 style="color:blue">1.1. 확률변수</h3>
+
+        <p>정의: 확률변수는 <strong>사건</strong>을 <strong>숫자</strong>로 대응시키는 함수이다.</p>
+        <p>
+            예) 동전을 던져서 본 윗면이 \(X\)면?
+            \[
+            X:\{앞면, 뒷면\}\rightarrow \{0, 1\}
+            \]
+            \(X(\{앞면\})=1\), \(X(\{뒷면\})=0\)
+        </p>
+        <p>
+            예) 축구선수가 슛을 찼을때 결과가 \(X\)면?
+            \[
+            X:\{노골, 골\}\rightarrow \{0, 1\}
+            \]
+            \(X(\{노골\})=0\), \(X(\{골\})=1\)
+        </p>
+
+        <h4>예제 1.1.1.</h4>
+        <p>
+            \(X=\,\)A, B, C, D, E 총 5명의 사람중 대회에 참여할 사람의 수
+        </p>
+        <p>
+            \[X:\{\{\emptyset\},\{A\},\{B\},\{C\},\{D\},\{E\},\{A,B\},\{A,C\},\cdots,\{A,B,C,D,E\}\}\rightarrow\{0,1,2,3,4,5\}\]
+        </p>
+        <p>
+            \(X(\{\emptyset\})=0\)
+        </p>
+        <p>
+            \(X(\{A\})=X(\{B\})=X(\{C\})=X(\{D\})=X(\{E\})=1\)
+        </p>
+        <p>
+            \(X(\{A,B\})=X(\{B,C\})=\cdots=X(\{D,E\})=2\)
+        </p>
+        <p>
+            \(X(\{A,B,C\})=X(\{A,B,D\})=\cdots=X(\{C,D,E\})=3\)
+        </p>
+        <p>
+            \(X(\{A,B,C,D\})=X(\{A,B,C,E\})=\cdots=X(\{B,C,D,E\})=4\)
+        </p>
+        <p>
+            \(X(\{A,B,C,D,E\})=5\)
+        </p>
+
+        <h3 style="color:blue">1.2. 확률변수의 독립</h3>
+        <p>
+            두 확률변수 \(X, Y\)는 다음을 만족하면 서로 독립이라고 한다.
+        </p>
+        <p>
+            \[P(X,Y)=P(X)P(Y)\]
+        </p>
+
+        <h4>예제 1.2.1.</h4>
+        <p>동전을 두 번 던질 때 윗면을 \(X_1, X_2\)라 하자. 앞면을 1, 뒷면을 0이라 하자.</p>
+        <p>
+            \[
+            P(X_1=1, X_2=1)=\frac{1}{4}=\frac{1}{2}\times\frac{1}{2}=P(X_1=1)P(X_2=1)\\
+            P(X_1=1, X_2=0)=\frac{1}{4}=\frac{1}{2}\times\frac{1}{2}=P(X_1=1)P(X_2=0)\\
+            P(X_1=0, X_2=1)=\frac{1}{4}=\frac{1}{2}\times\frac{1}{2}=P(X_1=0)P(X_2=1)\\
+            P(X_1=0, X_2=0)=\frac{1}{4}=\frac{1}{2}\times\frac{1}{2}=P(X_1=0)P(X_2=0)\\
+            \]
+            따라서 \(X_1, X_2\)는 서로 독립이다.
+        </p>
+
+        <h3 style="color:blue">1.3. 확률변수의 기대값</h3>
+        <p>
+            확률변수의 기대값(Expectation)은 다음과 같이 정의된다. 먼저 이산형(discrete) 확률변수 \(X\)의 기대값은
+            \[E(X):=\sum_x x\cdot p_X(x)\]
+            여기서 \(p_X(x)\)는 확률변수 \(X\)의 확률질량함수(probability mass function, pmf)라 한다.
+            연속형(continuous) 확률변수의 \(Y\)의 기대값은 다음과 같이 정의된다.
+            \[E(Y):=\int_y y\cdot f_Y(y)dy\]
+            여기서 \(f_Y(y)\)는 확률변수 \(Y\)의 확률밀도함수(probability density function, pdf)라 한다.
+        </p>
+
+        <h4>예제 1.3.1.</h4>
+        <p>
+            확률변수 \(X\)를 주사위를 하나 던질 때 나온 눈이라 하자. 이때 확률변수 \(X\)의 기대값은
+            \[E(X)=\sum_x x\cdot p_X(x)=1\cdot\frac{1}{6} + \cdots + 6\cdot\frac{1}{6}=\frac{21}{6}=\frac{7}{2}=3.5\]
+            위 예제에서 보듯이, 기대값은 평균(mean)을 일반화한 개념이라고 볼 수 있다.
+        </p>
+
+        <h4>예제 1.3.2.</h4>
+        <p>
+            확률변수 \(Y\)가 다음 연속형 확률분포를 따른다고 하자.
+            \[f_Y(y)=y,~0\leq y\leq1\]
+            이때 \(Y\)의 기대값을 구하면
+            \[E(Y)=\int_0^1y\cdot ydy=\left.\frac{y^3}{3}\right|_0^1=\frac{1}{3}\]
+        </p>
+        <p>
+            확률변수의 기대값(Expectation)은 다음과 같은 형태로 일반화(generalize)할 수 있다.
+            \[E[g(X)]:=\sum_x g(x)\cdot p_X(x)\]
+            \[E[g(Y)]:=\int_y g(y)\cdot f_Y(y)dy\]
+            확률분포의 분산(Variance)는 다음과 같이 계산한다.
+            \[Var(X)=E[\{X-E(X)\}^2]=E(X^2)-E(X)^2\]
+        </p>
+        <h3 style="color:blue">1.4. 정규분포와 그 성질</h3>
+        <p>
+            정규분포는 연속형 확률분포로서, 다음과 같은 확률밀도함수를 가진다.
+            \[f(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}\]
+        </p>
+        <p>
+            여기서 \(x\)는 실수의 어떤 값도 될 수 있으며, 음의 무한대나 양의 무한대도 허용한다. \(\mu,\sigma^2\)는 각각 평균, 분산을 의미한다.
+        </p>
+        <p>
+            확률변수 \(X\)가 정규분포를 따를 때 다음과 같이 표현한다.
+            \[X\sim\mathcal{N}(\mu,\sigma^2)\]
+            정규분포는 다음과 같은 형태를 가진다.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/2880px-Normal_Distribution_PDF.svg.png"
+             width="750">
+        <h4>1.4.1. 정규분포의 성질</h4>
+        <p>확률변수 \(X\)가 평균이 \(\mu\), 분산이 \(\sigma^2\)인 정규분포를 따른다 하자. 이때 다음이 성립한다.</p>
+        <ul>
+            <li>\(X+a\sim\mathcal{N}(\mu+a,\sigma^2)\), 즉 정규분포는 평행이동이 가능하다.</li>
+            <li>\(b\cdot X\sim\mathcal{N}(\mu,b^2\sigma^2)\), 즉 정규분포는 스케일링(scaling)이 가능하다.</li>
+            <li>위 두 조건을 만족하는 확률분포들을 모은 집합을 <strong>Location–scale family</strong>라 한다.</li>
+            <li>확률분포의 분산은 분포의 평행이동에 영향을 받지 않는다. 즉, \(a+bX\sim\mathcal{N}(\mu+a,b^2\sigma^2)\)</li>
+            <li>정규분포는 평균에 대해서 대칭이다. 즉, \(P(X<\mu)=P(X>\mu)=\frac{1}{2}\)</li>
+            <li>
+                확률변수 \(Y\)가 평균이 \(\mu\), 분산이 \(\sigma^2\)인 정규분포를 따르고 \(X\)와 서로 독립이라 하자. 이때 다음이 성립한다.
+                \[X+Y\sim\mathcal{N}(2\mu,2\sigma^2)\]
+            </li>
+        </ul>
+        <h4>예제 1.4.1.</h4>
+        <p>
+            Let \(X_1,X_2,\cdots,X_n\overset{iid}{\sim}\mathcal{N}(\mu,\sigma^2)\).
+            Define the sample mean \(\bar X_n:=\sum_{i=1}^nX_i/n\). Then
+            \[\bar X_n\sim \mathcal{N}(\mu, \sigma^2/n).\]
+            Therefore,
+            \[\sqrt{n}(\bar X_n-\mu)/\sigma\sim\mathcal{N}(0,1).\]
+        </p>
+        <h2 style="color:blue">2. ANalysis Of VAriance</h2>
+
+        <p>
+        <h3>학습목표</h3>
+        <p>
+        <ul>
+            <li>분산분석의 모형을 이해한다.</li>
+            <li>분산분석의 이론적 가정을 이해한다.</li>
+            <li>분산분석의 가설을 이해한다.</li>
+            <li>사후분석을 이해한다.</li>
+        </ul>
+        <hr>
+        <hr>
+
+        <h3 style="color:blue">2.1. ANOVA 모형</h3>
+        <p>
+            일반적인 실험(experiment)은 세 가지의 요소를 가진다.
+        </p>
+        <ul>
+            <li>종속변수(Dependent Variable) = Y</li>
+            <li>처치(Treatment) = T</li>
+            <li>요인(Factor) = F</li>
+        </ul>
+        <h4>예제 2.1.1.</h4>
+        <p>* 신약의 임상실험</p>
+        <ul>
+            <li>Y = vital signs</li>
+            <li>T = Placebo, Treated</li>
+            <li>F = Gender, Age bracket, etc.</li>
+        </ul>
+        <p>* 토지시범사업의 부동산가격 인하효과 검증</p>
+        <ul>
+            <li>Y = 부동산 가격</li>
+            <li>T = 비사업지역, 사업지역</li>
+            <li>F = 행정단위, 소득수준 범주(저/중/고), 인구수 범주(소/중/대)</li>
+        </ul>
+
+        <p>* ADHD case study, <a
+                href="https://www.sciencedirect.com/science/article/pii/S0890856709613174?casa_token=j57WtqZaGVoAAAAA:ChPBy63iny1Br-RRQ-VvGop5YFC5lJzvnIIdoX24t5rOdy82GxF5HQHUDXfurDZY7JdVjczcyWs">Pearson
+            et al. (2003)</a></p>
+        <ul>
+            <li>Y = cognitive performance: measured by the number
+                of correct responses to the Delay of Gratification or DOG task
+            </li>
+            <li>T = different dosages</li>
+            <li>This is a repeated-measures design because each participant performed the task after each dosage.</li>
+        </ul>
+
+        <span class="section1"> Descriptions of Variables</span>
+        <br>
+        <!-- InstanceBeginEditable name="Variables" -->
+        <table width="400" border="1" cellpadding="2" cellspacing="0">
+            <tr>
+                <td width="50" class="section1">Variable</td>
+                <td width="350" class="section1">Description</td>
+            </tr>
+            <tr>
+                <td>d0</td>
+                <td>Number of correct responses after taking a placebo</td>
+            </tr>
+            <tr>
+                <td>d15</td>
+                <td>Number of correct responses after taking .15 mg/kg of the
+                    drug
+                </td>
+            </tr>
+            <tr>
+                <td>d30</td>
+                <td>Number of correct responses after taking .30 mg/kg of the
+                    drug
+                </td>
+            </tr>
+            <tr>
+                <td>d60</td>
+                <td>Number of correct responses after taking .60 mg/kg of the
+                    drug
+                </td>
+            </tr>
+        </table>
+        <p>
+            위와 같이 처치만 주어진 모형을 일원배치 분산분석(One-way ANOVA) 모형이라 한다. 그러나, 대부분의 실험들은 처치만 고려하진 않는다.
+            그 이유는 다양한 요인들이 실험결과에 영향을 미칠 수 있기 때문이다. 가령, 신약의 효능은 당연히 연령대, 사람의 컨디션에 영향을 받을 것이다.
+            따라서 이원배치 분산분석 혹은 다원배치 분산분석이 일반적으로 이용되고 있다.
+        </p>
+        <h4>예제 2.1.2.</h4>
+        <p><a href="https://doi.org/10.1093/jaoac/62.6.1197">Kirchhoefer(1979)</a></p>
+        <img src="fig2.png" width="450">
+        <br>
+        <img src="fig1.png" width="450">
+
+        <h4>2.1.1. ANOVA 모형</h4>
+        <p>
+            이제 Two-way ANOVA(이원배치 분산분석)모형이 실제로 어떻게 생겼는지 들여다 보자.
+            \[
+            Y_{ijk}=i\text{번째 처치, }j\text{번째 요인이 주어졌을 때 }k\text{번째 관측치}\\
+            Y_{ijk}=\mu+\alpha_i+\beta_j+\varepsilon_{ijk}\\
+            \]
+            여기서 \(k\)는 관측치의 인덱스(index)를 의미한다. 각 모수(parameter)가 의미하는 바는 무엇일까?
+        </p>
+        <ul>
+            <li>\(\mu\)는 실험결과 전체의 평균, 즉 처치 및 요인의 영향을 받지 않는 기본적인 평균수준이 존재한다고 가정하는 것이다.</li>
+            <li>\(\alpha_i\)는 i번째 처치의 평균효과(mean effect)가 존재한다고 가정하는 것이다.</li>
+            <li>\(\beta_j\)는 j번째 요인의 평균효과가 존재한다고 가정하는 것이다.</li>
+        </ul>
+        <p>
+            ANOVA는 다음 조건들이 가정된다.
+        </p>
+        <ul>
+            <li>
+                \(\varepsilon_{ijk}\overset{iid}{\sim}\mathcal{N}(0,\sigma^2)\), 즉 오차(residual)는 서로 같은 정규분포를 따르면서 독립이다.
+                iid는 <strong>Independent and identically distributed</strong>를 의미한다.
+            </li>
+            <li>\(\sum_{i=1}^I\alpha_i=0\)</li>
+            <li>\(\sum_{i=j}^J\beta_j=0\)</li>
+        </ul>
+        <p>
+            자, 이제 우리가 관심있는 종속변수의 기대값을 보자. 우리가 가정하기를 잔차가 정규분포를 따른다고 했다. 그런데 앞에서 정규분포는 member of Location-scale family라고
+            했다. 따라서,
+            \[
+            Y_{ijk}\overset{ind.}{\sim}\mathcal{N}(\mu+\alpha_i+\beta_j,\sigma^2)\\
+            E(Y_{ijk})=\mu+\alpha_i+\beta_j:=\mu_{ij}\\
+            Var(Y_{ijk})=\sigma^2
+            \]
+            각 처치, 요인 조합마다 샘플의 개수가 같을 때 balanced design, 같지 않을 경우 unbalanced design이라 한다.
+        </p>
+        <p>
+            마지막 두 개의 조건은 정규화(regularization) 조건이다. 이는 ANOVA의 가설검정에서 필요한 이론적 가정인데,
+            이 가정이 없으면 추정해야 할 모수들(\(\mu,\alpha_1,\cdots,\alpha_I,\beta_1,\cdots,\beta_J, \sigma^2\))이 수학적으로 해를 구하기가
+            불가능해진다.
+            통계모형은 기본적으로 최우추정(maximum-likelihood estimation)을 통해 모수들을 추정하는데, 다음은 이 모수들의 최우추정 연립방적식이다.
+            \[
+            \frac{\sum_{i,j,k}(y_{ijk}-\alpha_i-\beta_j)}{I\cdot J\cdot n}=\mu\\
+            \frac{\sum_{j,k}(y_{ijk}-\mu-\beta_j)}{J\cdot n}=\alpha_i\\
+            \frac{\sum_{i,k}(y_{ijk}-\mu-\alpha_i)}{I\cdot n}=\beta_j
+            \]
+            이를 \(\bar\alpha:=I^{-1}\sum_i\alpha,~\bar\beta:=J^{-1}\sum_j\beta_j\)를 이용해 간단하게 표현하면
+            \[
+            \bar Y_{...}-\bar\alpha-\bar\beta=\mu\\
+            \bar Y_{i..}-\mu-\bar\beta=\alpha_i\\
+            \bar Y_{.j.}-\mu-\bar\alpha=\beta_j
+            \]
+            인데, 이 연립방적식 만으론 \(\mu,\alpha_i,\beta_j\)가 식별이 불가능(unidentifiable)하므로, \(\bar\alpha=\bar\beta=0\) 이라는 조건이 필요한
+            것이다.
+            따라서 이 조건 하에 모수들을 추정하면,
+            \begin{align*}
+            \hat\mu&=\bar Y_{...}\\
+            \hat\alpha_i&=\bar Y_{i..}-\hat\mu=\bar Y_{i..}-\bar Y_{...}\\
+            \hat\beta_j&=\bar Y_{.j.}-\hat\mu=\bar Y_{.j.}-\bar Y_{...}
+            \end{align*}
+            으로 ANOVA는 위처럼 처리, 요인의 효과(effect)를 추정하는 것이다.
+        </p>
+
+        <p>
+            지금까지는 처치, 요인 각각의 개별효과만 살펴보았다. 그러나 처치와 요인 간 교호작용(interaction)은 존재하지 않을까?
+            가령, 두 가지 식단(요인)과 두 가지 운동법(처치)에 따른 체중감량 효과를 실험했다고 하자.
+            이때 운동법의 효과가 식단에 따라 달라지거나, 식단의 효과가 운동법에 따라 달라지는 경우에 두 변수 간 교호작용이 존재한다고 한다.
+            식단의 구성에 따라 weight exercise의 효과가 더 좋을 수 있고, cardio exercise의 효과가 더 좋을 수도 있는 것이다.
+            \[
+            Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}
+            \]
+            이경우 역시 마찬가지로 정규화 조건\(\left(\sum_i(\alpha\beta)_{ij}=\sum_j(\alpha\beta)_{ij}=0\right)\)이 필요하며,
+            최우추정을 통한 추정은 다음과 같다.
+            \[
+            \hat{(\alpha\beta)}_{ij}=\bar Y_{ij.}-\bar Y_{i..}-\bar Y_{.j.}+\bar Y_{...}
+            \]
+        </p>
+
+        <h3 style="color:blue">2.2. ANOVA의 가설검정</h3>
+        <h4>2.2.1. F-test</h4>
+        <p>
+            이원배치 분산분석의 귀무가설 및 대립가설은 다음과 같다.
+            \begin{align*}
+            H_0&:\alpha_{1}=\cdots=\alpha_{I}=0\\
+            H_1&:\text{Not }H_0\\
+            H_0&:\beta_{1}=\cdots=\beta_{J}=0\\
+            H_1&:\text{Not }H_0\\
+            H_0&:(\alpha\beta)_{11}=\cdots=(\alpha\beta_{IJ})=0\\
+            H_1&:\text{Not }H_0
+            \end{align*}
+            즉, 처치와 요인의 효과를 검정하는 것이다. 그러나 귀무가설을 자세히 보면 omnibus testing인 것을 알 수 있다.
+            즉, 처치 및 요인 수준 간의 쌍대비교는 검정하지 않는 것이다.
+            \begin{align*}
+            SSA&=\sum_{i,j,k}\hat\alpha_i^2=Jn\sum_i\hat\alpha_i\text{: Treatment A sum of squares}\\
+            SSB&=\sum_{i,j,k}\hat\beta_j^2=In\sum_j\hat\beta_j\text{: Factor B sum of squares}\\
+            SSAB&=\sum_{i,j,k}\hat{(\alpha_i\beta_j)}^2=n\sum_{ij}(\hat\alpha\hat\beta)_{ij}\text{: Interaction AB sum
+            of squares}\\
+            SSE&=\sum_{i,j,k}(Y_{ijk}-\bar Y_{ij.})^2\text{: Error sum of squares}\\
+            SST&=\sum_{i,j,k}(Y_{ijk}-\bar Y_{...})^2\text{: Total sum of squares}\\
+            SSM&=SST-SSE\text{: Model sum of squares}\\
+            SSA+SSB+SSE&=SST\\
+            \end{align*}
+            이제 우린 Mean Squarred 통계량을 구할 수 있다.
+            \begin{align*}
+            MSA&=SSA/(I-1)\\
+            MSB&=SSB/(J-1)\\
+            MSAB&=SSAB/\{(I-1)(J-1)\}\\
+            MSE&=SSE/\{IJ(n-1)\}\\
+            MST&=SST/(IJn-1)\\
+            MSM&=SSM/\{IJn-1-IJ(n-1)\}=SSM/(IJ-1)
+            \end{align*}
+            수학적으로 다음이 알려져 있다.
+            \begin{align*}
+            MSA/MSE\sim F(I-1,IJ(n-1))\\
+            MSB/MSE\sim F(J-1,IJ(n-1))\\
+            MSAB/MSE\sim F((I-1)(J-1),IJ(n-1))\\
+            MSM/MSE\sim F(IJ-1,IJ(n-1))
+            \end{align*}
+        </p>
+
+        <h4>예제 2.1.3.</h4>
+        <img src="https://www.statology.org/wp-content/uploads/2018/12/2wayanova1.png" width="300">
+
+        <br>
+        <span class="section1">Mean table</span>
+        <!-- InstanceBeginEditable name="Variables" -->
+        <table width="300" border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <td width="70" class="section1">Watering Frq.</td>
+                <td width="37.5" class="section1">None</td>
+                <td width="37.5" class="section1">Low</td>
+                <td width="37.5" class="section1">Medium</td>
+                <td width="37.5" class="section1">High</td>
+            </tr>
+            <tr>
+                <td>Daily</td>
+                <td>4.14</td>
+                <td>4.98</td>
+                <td>5.72</td>
+                <td>5.78</td>
+            </tr>
+            <tr>
+                <td>Weekly</td>
+                <td>4</td>
+                <td>5.22</td>
+                <td>6.06</td>
+                <td>5.32</td>
+            </tr>
+        </table>
+
+        <p>
+            \begin{align*}
+            \hat\mu&=\bar Y_{...}=5.1525\\
+            \hat{None}&=\bar Y_{1..}-\bar Y_{...}=4.07-5.1525=-1.0825&\hat{Low}&=\bar Y_{2..}-\bar
+            Y_{...}=5.1-5.1525=-0.0525\\
+            \hat{Medium}&=\bar Y_{3..}-\bar Y_{...}=5.89-5.1525=0.7375&\hat{High}&=\bar Y_{4..}-\bar
+            Y_{...}=5.5-5.1525=0.3975\\
+            \hat{Daily}&=\bar Y_{.1.}-\bar Y_{...}=5.155-5.1525=0.0025&\hat{Weekly}&=\bar Y_{.2.}-\bar
+            Y_{...}=5.15-5.1525=-0.0025\\
+            \hat{(None*Daily)}&=\bar Y_{11.}-\bar Y_{1..}-\bar Y_{.1.}+\bar Y_{...}=4.14-4.07-5.155+5.1525=0.0675&
+            \hat{(None*Weekly)}&=4-4.07-5.15+5.1525=-0.0675\\
+            \cdots&&\hat{(High*Weekly)}&=5.32-5.5-5.15+5.1525=-0.1775
+            \end{align*}
+        </p>
+
+        <table>
+            <thead>
+            <tr>
+                <th colspan="12"
+                    style="text-align:left;padding:4px 8px 4px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    <span style="font-weight:400;">ANOVA</span>
+                </th>
+            </tr>
+            <tr></tr>
+            <tr>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);"></th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Sum of Squares
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    df
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Mean Square
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    F
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    p
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="text-align:start;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Watering Frequency
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    2.50e-4
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    1
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    2.50e-4
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    9.21e-4
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.976
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Sunlight Exposure
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    18.76
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    3
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    6.255
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    23.05
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Watering Frequency ✻ Sunlight Exposure
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    1.01
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    3
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.337
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    1.24
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.311
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    Residuals
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    8.68
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    32
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    0.271
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="12"
+                    style="text-align:start;padding:6px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            </tfoot>
+        </table>
+        <p><strong>결과의 해석(유의수준 = 0.05)</strong></p>
+        <ul>
+            <li>Watering Frequency의 효과는 유의하지 않음</li>
+            <li>Sunlight Exposure의 효과는 유의함</li>
+            <li>처치와 요인 간 교호작용은 유의하지 않음</li>
+        </ul>
+
+        <h4>2.2.2. Post hoc comparisons</h4>
+        <p>
+            사후검정 방법으로는 LSD, Bonferroni, Sidak, Tukey, Duncan, Dunnett, Scheffe 등 여러가지 방법이 있다.
+            그 중에서도 Tukey, Duncan, Scheffe 의 방법이 대부분의 연구에 사용된다.
+        </p>
+        <p>
+            SPSS는 Tukey의 사후검정 시 unbalanced design의 경우에는 조화평균을 사용하는 Tukey-Kramer 검정을 이용하여 사후검정을 실시한다.
+            Scheffe의 방법은 unbalanced design의 경우 사후검정을 위해 고안된 방법이다. 물론 balanced design에도 사용할 수 있다.
+        </p>
+        <p>
+            이 3가지 방법의 민감도에 대해 생각을 하면 Scheffe의 방법이 가장 엄격하고, Duncan의 방법이 가장 관용적이다.
+            그래서, Scheffe에서 차이가 있다라고 하면 Duncan에서는 차이가 있다라고 나오지만, 그 역은 성립하지 않는다.
+        </p>
+        <p>
+            Tukey의 방법은 Duncan과 Scheffe의 중간 정도에 위치한다고 생각하면 된다.
+        </p>
+        <h4>Estimated Marginal Means: Sunlight Exposure</h4>
+        <img src="data:image/png;base64,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" style="width: 400px; height: 350px;">
+        <table>
+            <thead>
+            <tr>
+                <th colspan="18"
+                    style="text-align:left;padding:4px 8px 4px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    <span style="font-weight:400;">Post Hoc Analysis - Sunlight Exposure</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Comparison
+                </th>
+                <th colspan="12"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></th>
+            </tr>
+            <tr>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Sunlight Exposure
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px 4px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);"></th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Sunlight Exposure
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    Mean Difference
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    SE
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    df
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    t
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    p
+                    <sub>tukey</sub>
+                </th>
+                <th colspan="2"
+                    style="text-align:center;padding:4px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:1px solid rgb(51, 51, 51);">
+                    p
+                    <sub>bonferroni</sub>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="text-align:start;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    None
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:8px 0px 2px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Low
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -1.030
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -4.42
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:8px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:8px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Medium
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -1.820
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -7.81
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    High
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -1.480
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -6.35
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    < .001
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Low
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    Medium
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -0.790
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -3.39
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.010
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.011
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    High
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -0.450
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    -1.93
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.235
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 2px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);">
+                    0.374
+                </td>
+                <td style="text-align:start;padding:2px 8px 2px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            <tr>
+                <td style="text-align:start;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    Medium
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 8px 4px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    -
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 0px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:start;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    High
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    0.340
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    0.233
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    32.0
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    1.46
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    0.473
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+                <td style="text-align:right;padding:2px 0px 8px 8px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);">
+                    0.925
+                </td>
+                <td style="text-align:start;padding:2px 8px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:2px solid rgb(51, 51, 51);"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="18"
+                    style="text-align:start;padding:6px 8px 2px;border-left:0px none rgb(51, 51, 51);border-right:0px none rgb(51, 51, 51);border-top:0px none rgb(51, 51, 51);border-bottom:0px none rgb(51, 51, 51);"></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+</body>
+</html>

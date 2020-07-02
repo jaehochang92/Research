@@ -1,4 +1,0 @@
-This is my text file.
-If you want to read this file,
-First learn how to handle files in
-Python!!
