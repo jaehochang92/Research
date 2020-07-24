@@ -1,0 +1,217 @@
+\documentclass[11pt]{article}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{natbib}
+\usepackage{fancybox}
+\usepackage{pstricks}
+\usepackage{float}
+\usepackage{threeparttable}
+\usepackage{epsfig,color,graphicx}
+\usepackage{bm,dsfont}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\baselinestretch}{1.1}
+\topmargin=0in \textheight=8.5in \oddsidemargin=0in
+\evensidemargin=0in \textwidth=6.3in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{example}      {\bf Example}
+\newtheorem{lemma}        {\bf Lemma}
+\newtheorem{theorem}      {\bf Theorem}
+\newtheorem{corollary}    {\bf Corollary}
+\newtheorem{proposition}  {\bf Proposition}
+\newtheorem{remark}       {\bf Remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bagns}    {\begin{align}}
+\newcommand{\eagns}    {\end{align}}
+\newcommand{\bcen}     {\begin{center}}
+	\newcommand{\ecen}     {\end{center}}
+\newcommand{\beqn}     {\begin{equation}}
+\newcommand{\eeqn}     {\end{equation}}
+\newcommand{\beqns}    {\begin{equation*}}
+\newcommand{\eeqns}    {\end{equation*}}
+\newcommand{\beqnary}  {\begin{eqnarray}}
+\newcommand{\eeqnary}  {\end{eqnarray}}
+\newcommand{\beqnarys} {\begin{eqnarray*}}
+	\newcommand{\eeqnarys} {\end{eqnarray*}}
+\newcommand{\bary}     {\begin{array}}
+	\newcommand{\eary}     {\end{array}}
+\newcommand{\benm}     {\begin{enumerate}}
+	\newcommand{\eenm}     {\end{enumerate}}
+\newcommand{\bitem}    {\begin{itemize}}
+	\newcommand{\eitem}    {\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mbN}   {\mathbb{N}}
+\newcommand{\mbZ}   {\mathbb{Z}}
+\newcommand{\mbQ}   {\mathbb{Q}}
+\newcommand{\mbR}   {\mathbb{R}}
+\newcommand{\mbB}   {\mathbb{B}}
+\newcommand{\mbM}   {\mathbb{M}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bzero}     {\mbox{\boldmath{$0$}\unboldmath}}
+\newcommand{\bone}     {\mbox{\boldmath{$1$}\unboldmath}}
+\newcommand{\beps}      {\mbox{\boldmath{$\varepsilon$}\unboldmath}}
+\newcommand{\balpha}    {\mbox{\boldmath{$\alpha$}\unboldmath}}
+\newcommand{\bbeta}     {\mbox{\boldmath{$\beta$}\unboldmath}}
+\newcommand{\bgamma}    {\mbox{\boldmath{$\gamma$}\unboldmath}}
+\newcommand{\blambda}   {\mbox{\boldmath{$\lambda$}\unboldmath}}
+\newcommand{\bdelta}    {\mbox{\boldmath{$\delta$}\unboldmath}}
+\newcommand{\bupsilon}  {\mbox{\boldmath{$\upsilon$}\unboldmath}}
+\newcommand{\bmu}       {\mbox{\boldmath{$\mu$}\unboldmath}}
+\newcommand{\bxi}       {\mbox{\boldmath{$\xi$}\unboldmath}}
+\newcommand{\bpi}       {\mbox{\boldmath{$\pi$}\unboldmath}}
+\newcommand{\bnu}       {\mbox{\boldmath{$2$}\unboldmath}}
+\newcommand{\brho}      {\mbox{\boldmath{$\rho$}\unboldmath}}
+\newcommand{\bsigma}    {\mbox{\boldmath{$\sigma$}\unboldmath}}
+\newcommand{\bomega}    {\mbox{\boldmath{$\omega$}\unboldmath}}
+\newcommand{\bGamma}    {\mbox{\boldmath{$\Gamma$}\unboldmath}}
+\newcommand{\bDelta}    {\mbox{\boldmath{$\Delta$}\unboldmath}}
+\newcommand{\bTheta}    {\mbox{\boldmath{$\Theta$}\unboldmath}}
+\newcommand{\btheta}    {\mbox{\boldmath{$\theta$}\unboldmath}}
+\newcommand{\bLambda}   {\mbox{\boldmath{$\Lambda$}\unboldmath}}
+\newcommand{\bXi}       {\mbox{\boldmath{$\Xi$}\unboldmath}}
+\newcommand{\bchi}      {\mbox{\boldmath{$\chi$}\unboldmath}}
+\newcommand{\bPi}       {\mbox{\boldmath{$\Pi$}\unboldmath}}
+\newcommand{\bSigma}    {\mbox{\boldmath{$\Sigma$}\unboldmath}}
+\newcommand{\bUpsilon}  {\mbox{\boldmath{$\Upsilon$}\unboldmath}}
+\newcommand{\bPhi}      {\mbox{\boldmath{$\Phi$}\unboldmath}}
+\newcommand{\bphi}      {\mbox{\boldmath{$\phi$}\unboldmath}}
+\newcommand{\bPsi}      {\mbox{\boldmath{$\Psi$}\unboldmath}}
+\newcommand{\bOmega}    {\mbox{\boldmath{$\Omega$}\unboldmath}}
+\newcommand{\bvarphi}   {\mbox{\boldmath{$\varphi$}\unboldmath}}
+\newcommand{\btau}   {\mbox{\boldmath{$\tau$}\unboldmath}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\sbmu}        {\mbox{\scriptsize\boldmath{$\mu$  }\unboldmath}}
+\newcommand{\sbbeta}      {\mbox{\scriptsize\boldmath{$\beta$}\unboldmath}}
+\newcommand{\sbphi}       {\mbox{\scriptsize\boldmath{$\phi$ }\unboldmath}}
+\newcommand{\sbpi}       {\mbox{\scriptsize\boldmath{$\pi$ }\unboldmath}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\cA}    {{\cal A}}
+\newcommand{\cB}    {{\cal B}}
+\newcommand{\cC}    {{\cal C}}
+\newcommand{\cD}    {{\cal D}}
+\newcommand{\cE}    {{\cal E}}
+\newcommand{\cH}    {{\cal H}}
+\newcommand{\cF}    {{\cal F}}
+\newcommand{\cL}    {{\cal L}}
+\newcommand{\cN}    {{\cal N}}
+\newcommand{\cG}    {{\cal G}}
+\newcommand{\cX}    {{\cal X}}
+\newcommand{\cY}    {{\cal Y}}
+\newcommand{\cP}    {{\cal P}}
+\newcommand{\cQ}    {{\cal Q}}
+\newcommand{\cR}    {{\cal R}}
+\newcommand{\cS}    {{\cal S}}
+\newcommand{\cT}    {{\cal T}}
+\newcommand{\cV}    {{\cal V}}
+\newcommand{\cI}    {{\cal I}}
+\newcommand{\cJ}    {{\cal J}}
+\newcommand{\cU}    {{\cal U}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bA}   {{\bf A}}
+\newcommand{\ba}   {{\bf a}}
+\newcommand{\bB}   {{\bf B}}
+\newcommand{\bb}   {{\bf b}}
+\newcommand{\bC}   {{\bf C}}
+\newcommand{\bc}   {{\bf c}}
+\newcommand{\bD}   {{\bf D}}
+\newcommand{\bd}   {{\bf d}}
+\newcommand{\bee}  {{\bf e}}
+\newcommand{\bF}   {{\bf F}}
+\newcommand{\bff}  {{\bf f}}
+\newcommand{\bG}   {{\bf G}}
+\newcommand{\bg}   {{\bf g}}
+\newcommand{\bI}   {{\bf I}}
+\newcommand{\bJ}   {{\bf J}}
+\newcommand{\bH}   {{\bf H}}
+\newcommand{\bL}   {{\bf L}}
+\newcommand{\bl}   {{\bf l}}
+\newcommand{\bN}   {{\bf N}}
+\newcommand{\bn}   {{\bf n}}
+\newcommand{\bQ}   {{\bf Q}}
+\newcommand{\bp}   {{\bf p}}
+\newcommand{\bP}   {{\bf P}}
+\newcommand{\bq}   {{\bf q}}
+\newcommand{\bR}   {{\bf R}}
+\newcommand{\br}   {{\bf r}}
+\newcommand{\bS}   {{\bf S}}
+\newcommand{\bs}   {{\bf s}}
+\newcommand{\bT}   {{\bf T}}
+\newcommand{\bt}   {{\bf t}}
+\newcommand{\bU}   {{\bf U}}
+\newcommand{\bu}   {{\bf u}}
+\newcommand{\bV}   {{\bf V}}
+\newcommand{\bv}   {{\bf v}}
+\newcommand{\bW}   {{\bf W}}
+\newcommand{\bw}   {{\bf w}}
+\newcommand{\bX}   {{\bf X}}
+\newcommand{\bx}   {{\bf x}}
+\newcommand{\bY}   {{\bf Y}}
+\newcommand{\by}   {{\bf y}}
+\newcommand{\bZ}   {{\bf Z}}
+\newcommand{\bz}   {{\bf z}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tA}    {{\tilde A}}
+\newcommand{\ta}    {{\tilde a}}
+\newcommand{\tC}    {{\tilde C}}
+\newcommand{\tc}    {{\tilde c}}
+\newcommand{\tJ}    {{\tilde J}}
+\newcommand{\tj}    {{\tilde j}}
+\newcommand{\tQ}    {{\tilde Q}}
+\newcommand{\tq}    {{\tilde q}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tbA}   {{\bf \tA}}
+\newcommand{\tba}   {{\bf \ta}}
+\newcommand{\tbJ}   {{\bf \tJ}}
+\newcommand{\tbj}   {{\bf \tj}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\veps}  {{\varepsilon}}
+\newcommand{\pr}    {{\bf{P}}}
+\newcommand{\ra}    {{\rightarrow}}
+\newcommand{\Ra}    {{\Rightarrow}}
+\newcommand{\trace} {{\rm trace}}
+\newcommand{\diag}  {{\rm diag}}
+\newcommand{\sign}  {{\rm sgn}}
+\newcommand{\supp}  {{\bf\rm supp}}
+\newcommand{\gsupp}  {{\bf\rm gsupp}}
+\newcommand{\rif}  {{\bf\rm RIF}}
+\newcommand{\cif}  {{\bf\rm CIF}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\sumin} {\sum_{i=1}^n}
+\newcommand{\sumjp} {\sum_{j=1}^p}
+\newcommand{\lrnorm}[2]{ \left|\!\left| #1 \right|\!\right|_{#2}}
+\newcommand{\norm}[2]{\|#1\|_{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\JKL}  {{J_{\lambda}^{(k)}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\qed{\space$\square$ \par \vspace{.15in}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	\section{LDA Likelihood}
+	\begin{align*}
+	\pi&:=P(C=2),~C-1\sim Bern(\pi),~C\in\{1,2\}\\
+	P(C=c)&=\pi^c(1-\pi)^{1-c}
+	\end{align*}
+	\begin{align*}
+	f_1(\bx_i):=P(\bx_i|C_i=1)=|\det(2\pi\Sigma)|^{-\frac{1}{2}}\exp\left\{-\frac{1}{2}(\bx_i-\bmu_1)'\Sigma^{-1}(\bx_i-\bmu_1)\right\}\\
+	f_2(\bx_i):=P(\bx_i|C_i=2)=|\det(2\pi\Sigma)|^{-\frac{1}{2}}\exp\left\{-\frac{1}{2}(\bx_i-\bmu_2)'\Sigma^{-1}(\bx_i-\bmu_2)\right\}\\
+	\end{align*}
+	Let $\bbeta:=\Sigma^{-1}(\bmu_2-\bmu_1)$.
+	\begin{align*}
+	P(\bx_i,c_i)=P(\bx_i|c_i)P(c_i)=\begin{cases}
+	f_2(\bx_i)\pi&,~c_i=2\\
+	f_1(\bx_i)(1-\pi)&,~c_i=1
+	\end{cases}\\
+	=\{\pi f_2(\bx_i)\}^{c_i-1}\{(1-\pi)f_1(\bx_i)\}^{2-c_i}
+	\end{align*}
+\end{document}
