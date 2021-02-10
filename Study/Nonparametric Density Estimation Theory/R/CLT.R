@@ -1,28 +1,38 @@
-rm(list=ls())
+rm(list = ls())
 require(Rcpp)
 set.seed(83)
-sourceCpp('Desktop/Statistics/NPDE/Rcpp/CLT_fh.cpp')
+sourceCpp('../Rcpp/CLT_fh.cpp')
 
 n <- 1000
-x <- seq(0,1,length.out = 100)
-X <- rbeta(n,4,2)
+x <- seq(0, 1, length.out = 100)
+X <- rbeta(n, 4, 2)
 
-K <- function(u){3/4*(1-u^2)*(abs(u)<=1)}
-mu0K2 <- integrate(function(x){K(x)^2},-1,1)$value
-mu2K <- integrate(function(x){x^2*K(x)},-1,1)$value
-fpp2int <- integrate(function(x){(120*x*(1-2*x))^2},0,1)$value
-h_opt <- ((mu0K2)/(fpp2int*mu2K^2))^(1/5)*n^(-1/5)
+K <- function(u) {
+  3 / 4 * (1 - u ^ 2) * (abs(u) <= 1)
+}
+mu0K2 <- integrate(function(x) {
+  K(x) ^ 2
+},-1, 1)$value
+mu2K <- integrate(function(x) {
+  x ^ 2 * K(x)
+},-1, 1)$value
+fpp2int <- integrate(function(x) {
+  (120 * x * (1 - 2 * x)) ^ 2
+}, 0, 1)$value
+h_opt <- ((mu0K2) / (fpp2int * mu2K ^ 2)) ^ (1 / 5) * n ^ (-1 / 5)
 
 # Which value of h is optimal?? -------------------------------------------
 
-par(mfrow=c(2,2))
-for (h in sort(c(h_opt,jitter(rep(h_opt,3),amount = .05)))) {
+par(mfrow = c(2, 2))
+for (h in sort(c(h_opt, jitter(rep(h_opt, 3), amount = .05)))) {
   # print(system.time(y <- fh(sort(x),X,h)))
-  y <- fh(sort(x),X,h)
-  curve(dbeta(x,4,2), main = ifelse(h==h_opt,
-                                    paste('h = ',round(h,3),'(opt.)',sep = ''),
-                                    paste('h = ',round(h,3),sep = '')))
-  lines(sort(x),y,col='red')
+  y <- fh(sort(x), X, h)
+  curve(dbeta(x, 4, 2), main = ifelse(
+    h == h_opt,
+    paste('h = ', round(h, 3), '(opt.)', sep = ''),
+    paste('h = ', round(h, 3), sep = '')
+  ))
+  lines(sort(x), y, col = 'red')
 }
 
 
@@ -30,20 +40,31 @@ for (h in sort(c(h_opt,jitter(rep(h_opt,3),amount = .05)))) {
 # CLT? Really?? -----------------------------------------------------------
 
 S <- 1000
-v <- rep(0,S)
+v <- rep(0, S)
 x <- c(.25) # fix x = x0
-mu0K2 <- integrate(function(x){K(x)^2},-1,1)$value
-mu2K <- integrate(function(x){x^2*K(x)},-1,1)$value
+mu0K2 <- integrate(function(x) {
+  K(x) ^ 2
+}, -1, 1)$value
+mu2K <- integrate(function(x) {
+  x ^ 2 * K(x)
+}, -1, 1)$value
 
-for(n in c(30,50,100,300)){
-  v <- rep(0,S)
-  for(k in 1:S){ # # of sampling
-    X <- rbeta(n,4,2)
-    h_opt <- ((mu0K2)/(fpp2int*mu2K^2))^(1/5)*n^(-1/5)
-    f.fitted <- fh(sort(x),X,h)
+for (n in c(30, 50, 100, 300)) {
+  v <- rep(0, S)
+  for (k in 1:S) {
+    # # of sampling
+    X <- rbeta(n, 4, 2)
+    h_opt <-
+      ((mu0K2) / (fpp2int * mu2K ^ 2)) ^ (1 / 5) * n ^ (-1 / 5)
+    f.fitted <- fh(sort(x), X, h)
     
-    v[k] <- sqrt(n*h_opt)*(f.fitted-dbeta(x,4,2)-(mu2K*120*x*(1-2*x)*h_opt^2)/2)/sqrt(mu0K2*dbeta(x,4,2))
+    v[k] <-
+      sqrt(n * h_opt) * (f.fitted - dbeta(x, 4, 2) - (mu2K * 120 * x * (1 - 2 *
+                                                                          x) * h_opt ^ 2) / 2) / sqrt(mu0K2 * dbeta(x, 4, 2))
   }
-  hist(v,freq = F,col = 'red',main=paste('n = ',n,sep = ''))
-  curve(dnorm(x),add=T) 
+  hist(v,
+       freq = F,
+       col = 'red',
+       main = paste('n = ', n, sep = ''))
+  curve(dnorm(x), add = T)
 }
