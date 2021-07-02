@@ -1,0 +1,12 @@
+name: OrderMe
+title:
+username:
+account: cjhsfl
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3142378
+bundleId: 3869243
+url: https://cjhsfl.shinyapps.io/OrderMe/
+when: 1605577725.57628
+asMultiple: FALSE
+asStatic: FALSE
